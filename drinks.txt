@@ -1,0 +1,6 @@
+#Menu
+#Sun Apr 01 11:45:38 MSK 2018
+Drink3=50
+Drink2=200
+Drink1=100
+Black\ Lord=1000
