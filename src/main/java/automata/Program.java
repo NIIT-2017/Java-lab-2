@@ -5,7 +5,7 @@ package automata;
  */
 public class Program {
     public static void main(String[] args) {
-        Automata automata = new Automata("drinks.txt");
+        Automata automata = new Automata("drinks.txt","  ");
         System.out.println(automata.getState());
         automata.on();
         System.out.println(automata.getState());
