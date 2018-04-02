@@ -6,12 +6,49 @@ package automata;
 public class Program {
     public static void main(String[] args) {
         Automata automata = new Automata("drinks.txt","  ");
-        System.out.println(automata.getState());
+        System.out.println("state = "+automata.getState());
+        System.out.println("automata.getCash() = " + automata.getCash());
+        System.out.println("automata.getMoney() = " + automata.getMoney());
+        System.out.println();
+
+        System.out.println("on");
         automata.on();
-        System.out.println(automata.getState());
+        System.out.println("state = "+automata.getState());
+        System.out.println("automata.getCash() = " + automata.getCash());
+        System.out.println("automata.getMoney() = " + automata.getMoney());
+        System.out.println();
+
+        System.out.println("choice drink 2");
+        automata.choicedrink(2);
+        System.out.println("state = "+automata.getState());
+        System.out.println("automata.getCash() = " + automata.getCash());
+        System.out.println("automata.getMoney() = " + automata.getMoney());
+        System.out.println();
+
+        System.out.println("coin 10.0");
         automata.coin(10.0);
-        System.out.println(automata.getCash());
-        System.out.println(automata.getState());
-        automata.getMenu();
+        System.out.println("state = "+automata.getState());
+        System.out.println("automata.getCash() = " + automata.getCash());
+        System.out.println("automata.getMoney() = " + automata.getMoney());
+        System.out.println();
+
+        System.out.println("coin 200.0");
+        automata.coin(200.0);
+        System.out.println("automata.getCash() = " + automata.getCash());
+        System.out.println("state ="+automata.getState());
+        System.out.println("automata.getMoney() = " + automata.getMoney());
+        System.out.println();
+
+        System.out.println("return money");
+        System.out.println("state ="+automata.getState());
+        System.out.println("automata.getMoney() = " + automata.getMoney());
+        System.out.println("automata.returnMoney() = " + automata.returnMoney());
+        System.out.println();
+
+        System.out.println("off");
+        automata.off();
+        System.out.println("state ="+automata.getState());
+        System.out.println("automata.getMoney() = " + automata.getMoney());
+        System.out.println();
     }
 }

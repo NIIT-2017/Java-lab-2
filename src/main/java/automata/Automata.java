@@ -6,9 +6,14 @@ import java.util.*;
 /**
  * Created by kortez on 01/04/18.
  */
-public class Automata implements Runnable {
-//Members
+public class Automata{
+    public double getMoney() {
+        return money;
+    }
+
+    //Members
     enum States {OFF, WAIT,ACCEPT,CHECK,COOK}
+    private boolean menuVisible;
     private States state;
     private double cash;
     private double money;
@@ -28,12 +33,14 @@ public class Automata implements Runnable {
     public void on(){
         //включение возможено только из off
         if (state == States.OFF) state = States.WAIT;
+        work();
     }
 
     //метод переводит автомат в состояние off
     public void off(){
         //выключение только из состояния wait
         if (state == States.WAIT) state = States.OFF;
+        work();
     }
 
     public Automata(String path,String spliter) {
@@ -48,7 +55,7 @@ public class Automata implements Runnable {
     }
 
     //вывод меню
-    public void getMenu(){
+    private void getMenu(){
         System.out.println("№ название цена");
         for (int i = 1; i <= countDrinks; i++) {
             String[] drink = drinks.get(i);
@@ -57,34 +64,28 @@ public class Automata implements Runnable {
     }
 
     //выбор напитка
-    public void choise(int drink){
+    public void choicedrink(int drink){
         indexSelectedDrink = drink;
+        state=States.CHECK;
+        menuVisible=false;
+        work();
     }
 
-    //отмена заказа и возврат денег
-    public double cancel(){
-        if (state==States.CHECK){
-            double result = cash;
-            return cash = 0.0f;
-        }
-        return 0.0f;
-    }
-
-    void cook(){
+    void pay( double price){
         if (state==States.CHECK){
             //вход в состояние готовки только из состояния check
+            cash-=price;
+            money+=price;
             state=States.COOK;
         }
+        work();
     }
 
     //метод внесения денег на счет в автомате
     public void coin(double cash){
-        //занесение денег только из состояния wait или довнесение в состоянии accept
-        if (state == States.ACCEPT) this.cash+=cash;
-        else if (state == States.WAIT) {
-            this.cash+=cash;
-            state = States.ACCEPT;
-        }
+        //занесение денег только из состояния check
+        if (state == States.CHECK) this.cash+=cash;
+        work();
     }
 
     //прочитать меню из файла
@@ -105,25 +106,48 @@ public class Automata implements Runnable {
             e.printStackTrace();
         }
     }
+    //напиток приготовлен
+    private void complite() {
+        state=States.WAIT;
+    }
+    //возвращает деньги со счета
+    public double returnMoney() {
+        double result=cash;
+        cash=0.0f;
+        return result;
+    }
 
-    //priority task
-    public void run() {
-        while (true){
-            //infinity cycle
-            switch (state){
-                //switch off
-                case OFF:   break;
-                //waiting
-                case WAIT:  break;
-                //accept money
-                case ACCEPT: break;
-                //checking
-                case CHECK: break;
-                //cooling drink
-                case COOK:  break;
+    //цыкл работы автомата
+    private void work() {
+        switch (state){
+            //waiting
+            case WAIT:  waitAction();   break;
+            //checking
+            case CHECK: checkMoney();   break;
+            //cooling drink
+            case COOK:  cookDrink();    break;
+            default:    break;
+        }
+    }
+    private void checkMoney(){
+        //проверить хватает ли на счете денег
+        double price =Double.parseDouble(drinks.get(indexSelectedDrink)[1]);
+        if (price <= cash) pay(price);
+    }
 
-                default:    break;
-            }
+    private void cookDrink(){
+        try {
+            Thread.sleep(10000);
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        complite();
+    }
+
+    private void waitAction(){
+        if (!menuVisible) {
+            getMenu();
+            menuVisible=true;
         }
     }
 }
