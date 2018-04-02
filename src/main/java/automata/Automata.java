@@ -71,7 +71,7 @@ public class Automata{
         work();
     }
 
-    void pay( double price){
+    private void pay( double price){
         if (state==States.CHECK){
             //вход в состояние готовки только из состояния check
             cash-=price;
@@ -89,7 +89,7 @@ public class Automata{
     }
 
     //прочитать меню из файла
-    public void readMenuFromFile(File file, String spliter){
+    private void readMenuFromFile(File file, String spliter){
         BufferedReader reader;
         try {
             reader = new BufferedReader(new FileReader(file));
