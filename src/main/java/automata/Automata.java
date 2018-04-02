@@ -1,21 +1,21 @@
 package automata;
 
-import javafx.util.Pair;
 import java.io.*;
 import java.util.*;
 
 /**
  * Created by kortez on 01/04/18.
  */
-public class Automata {
+public class Automata implements Runnable {
+//Members
     enum States {OFF, WAIT,ACCEPT,CHECK,COOK}
     private States state;
     private double cash;
     private double money;
     private int countDrinks;//доступное колличество напитков
-    private Pair<String,Double> selectedDrink;
+    private int indexSelectedDrink;
     private Hashtable<Integer,String[]> drinks;
-
+//Methods
     public double getCash() {
         return cash;
     }
@@ -42,6 +42,7 @@ public class Automata {
         cash = 0.0f;
         money = 0.0f;
         drinks = new Hashtable<Integer, String[]>();
+        indexSelectedDrink=0;
         File file = new File(path);
         readMenuFromFile(file,spliter);
     }
@@ -56,14 +57,17 @@ public class Automata {
     }
 
     //выбор напитка
-    public void choise(String drink){
+    public void choise(int drink){
+        indexSelectedDrink = drink;
     }
 
     //отмена заказа и возврат денег
-    public void cancel(){
+    public double cancel(){
         if (state==States.CHECK){
-
+            double result = cash;
+            return cash = 0.0f;
         }
+        return 0.0f;
     }
 
     void cook(){
@@ -99,6 +103,27 @@ public class Automata {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        }
+    }
+
+    //priority task
+    public void run() {
+        while (true){
+            //infinity cycle
+            switch (state){
+                //switch off
+                case OFF:   break;
+                //waiting
+                case WAIT:  break;
+                //accept money
+                case ACCEPT: break;
+                //checking
+                case CHECK: break;
+                //cooling drink
+                case COOK:  break;
+
+                default:    break;
+            }
         }
     }
 }
