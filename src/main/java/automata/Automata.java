@@ -7,13 +7,18 @@ import java.util.*;
  * Created by kortez on 01/04/18.
  */
 public class Automata{
-    public double getMoney() {
+    int getCompliteDrinkIndex() {
+        return compliteDrinkIndex;
+    }
+
+    private int compliteDrinkIndex;
+
+    double getMoney() {
         return money;
     }
 
     //Members
-    enum States {OFF, WAIT,ACCEPT,CHECK,COOK}
-    private boolean menuVisible;
+    enum States {OFF, WAIT,CHECK,COOK}
     private States state;
     private double cash;
     private double money;
@@ -21,23 +26,23 @@ public class Automata{
     private int indexSelectedDrink;
     private Hashtable<Integer,String[]> drinks;
 //Methods
-    public double getCash() {
+    double getCash() {
         return cash;
     }
 
-    public String getState() {
+    String getState() {
         return state.toString();
     }
 
     //метод переводит автомат в состояние on
-    public void on(){
+    void on(){
         //включение возможено только из off
         if (state == States.OFF) state = States.WAIT;
         work();
     }
 
     //метод переводит автомат в состояние off
-    public void off(){
+    void off(){
         //выключение только из состояния wait
         if (state == States.WAIT) state = States.OFF;
         work();
@@ -55,20 +60,23 @@ public class Automata{
     }
 
     //вывод меню
-    private void getMenu(){
-        System.out.println("№ название цена");
+    ArrayList<String> getMenu(){
+        ArrayList<String> arrayStrign = new ArrayList<String>();
+        arrayStrign.add("Доступные напитки:");
         for (int i = 1; i <= countDrinks; i++) {
             String[] drink = drinks.get(i);
-            System.out.println(i+" "+drink[0]+" "+drink[1]);
+            arrayStrign.add(i+" "+drink[0]+" "+drink[1]);
         }
+        return arrayStrign;
     }
 
     //выбор напитка
-    public void choicedrink(int drink){
-        indexSelectedDrink = drink;
-        state=States.CHECK;
-        menuVisible=false;
-        work();
+    void choiceDrink(int drink){
+        if(state==States.WAIT) {
+            indexSelectedDrink = drink;
+            state = States.CHECK;
+            work();
+        }
     }
 
     private void pay( double price){
@@ -82,10 +90,12 @@ public class Automata{
     }
 
     //метод внесения денег на счет в автомате
-    public void coin(double cash){
-        //занесение денег только из состояния check
-        if (state == States.CHECK) this.cash+=cash;
-        work();
+    void coin(double cash){
+        if (cash>0.0) {
+            //занесение денег только из состояния check
+            if (state == States.CHECK) this.cash += cash;
+            work();
+        }
     }
 
     //прочитать меню из файла
@@ -108,10 +118,11 @@ public class Automata{
     }
     //напиток приготовлен
     private void complite() {
+        compliteDrinkIndex = indexSelectedDrink;
         state=States.WAIT;
     }
     //возвращает деньги со счета
-    public double returnMoney() {
+    double returnMoney() {
         double result=cash;
         cash=0.0f;
         return result;
@@ -121,7 +132,7 @@ public class Automata{
     private void work() {
         switch (state){
             //waiting
-            case WAIT:  waitAction();   break;
+            case WAIT:  break;
             //checking
             case CHECK: checkMoney();   break;
             //cooling drink
@@ -142,12 +153,5 @@ public class Automata{
             e.printStackTrace();
         }
         complite();
-    }
-
-    private void waitAction(){
-        if (!menuVisible) {
-            getMenu();
-            menuVisible=true;
-        }
     }
 }
