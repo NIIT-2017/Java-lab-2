@@ -8,7 +8,7 @@ import java.util.Iterator;
  */
 public class Program {
     public static void main(String[] args) {
-        Automata automata = new Automata("drinks.txt","  ");
+        Automata automata = new Automata("Drinks.xml");
         System.out.println("state = "+automata.getState());
         System.out.println("automata.getCash() = " + automata.getCash());
         System.out.println("automata.getMoney() = " + automata.getMoney());

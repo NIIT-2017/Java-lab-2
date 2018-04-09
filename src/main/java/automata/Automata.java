@@ -1,5 +1,14 @@
 package automata;
 
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.Node;
+import org.w3c.dom.NodeList;
+import org.xml.sax.SAXException;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.parsers.ParserConfigurationException;
 import java.io.*;
 import java.util.*;
 
@@ -48,7 +57,7 @@ public class Automata{
         work();
     }
 
-    public Automata(String path,String spliter) {
+    public Automata(String path) {
         this.state = States.OFF;
         countDrinks=0;
         cash = 0.0f;
@@ -56,7 +65,8 @@ public class Automata{
         drinks = new Hashtable<Integer, String[]>();
         indexSelectedDrink=0;
         File file = new File(path);
-        readMenuFromFile(file,spliter);
+        readFromXML(file);
+        //readMenuFromFile(file,"  "); для чтения из текстового файла
     }
 
     //вывод меню
@@ -153,5 +163,31 @@ public class Automata{
             e.printStackTrace();
         }
         complite();
+    }
+    public void readFromXML(File file){
+        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+        try {
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            Document doc = db.parse(file);
+            NodeList nodeList = doc.getElementsByTagName("drink");
+            for (int i = 0; i < nodeList.getLength(); i++) {
+                Node node = nodeList.item(i);
+                if (node.getNodeType()==Node.ELEMENT_NODE)
+                {
+                    Element element = (Element) node;
+                    String[] str=new String[2];
+                    str[0]=element.getElementsByTagName("name").item(0).getTextContent();
+                    str[1]=element.getElementsByTagName("cost").item(0).getTextContent();
+                    this.drinks.put(++countDrinks,str);
+                }
+            }
+        } catch (ParserConfigurationException e) {
+            e.printStackTrace();
+        } catch (SAXException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 }

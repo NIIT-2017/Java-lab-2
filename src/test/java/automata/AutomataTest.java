@@ -13,7 +13,7 @@ public class AutomataTest {
     @org.junit.Before
     public void setUp() throws Exception {
         //создаем автомат
-        automata = new Automata("drinks.txt","  ");
+        automata = new Automata("Drinks.xml");
     }
 
     @org.junit.After
@@ -224,9 +224,10 @@ public class AutomataTest {
     public void getMenu() throws Exception {
         ArrayList<String> check=new ArrayList<String>();
         check.add("Доступные напитки:");
-        check.add("1 Drink1 100");
-        check.add("2 Drink2 200");
-        check.add("3 Drink3 50");
+        check.add("1 Американо 100");
+        check.add("2 Капучино 200");
+        check.add("3 Эспрессо 120");
+        check.add("4 Мокачино 180");
         ArrayList<String> menu = automata.getMenu();
         for (int i = 0; i < menu.size(); i++) {
             assertEquals(menu.get(i),check.get(i));
