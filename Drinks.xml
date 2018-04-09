@@ -12,7 +12,6 @@
         <name>Эспрессо</name>
         <cost>120</cost>
     </drink>
-
     <drink>
         <name>Мокачино</name>
         <cost>180</cost>
