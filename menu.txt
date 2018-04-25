@@ -1,0 +1,2 @@
+0-black coffee,1-black tea,2-green tea,3-milk,4-chocolate
+50,20,20,25,40
