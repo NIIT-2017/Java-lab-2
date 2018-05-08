@@ -1,11 +1,10 @@
-import org.junit.jupiter.api.Test;
+import org.junit.Test;
+import static org.junit.Assert.assertEquals;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-class AutomataTest {
+public class AutomataTest {
 
     @Test
-    void on() {
+    public void on() {
         Automata testAutomata = new Automata();
         testAutomata.on();
         assertEquals(Automata.STATES.WAIT, testAutomata.getState());
@@ -13,7 +12,7 @@ class AutomataTest {
     }
 
     @Test
-    void off() {
+    public void off() {
 
         Automata testAutomata = new Automata();
         testAutomata.on();
@@ -24,7 +23,7 @@ class AutomataTest {
     }
 
     @Test
-    void coin() {
+    public void coin() {
         Automata testAutomata = new Automata();
         testAutomata.on();
         testAutomata.coin(10);
@@ -33,7 +32,7 @@ class AutomataTest {
     }
 
     @Test
-    void choice() {
+    public void choice() {
         Automata testAutomata = new Automata();
         testAutomata.on();
         testAutomata.coin(10);
@@ -46,7 +45,7 @@ class AutomataTest {
     }
 
     @Test
-    void cancel() {
+    public void cancel() {
         Automata testAutomata = new Automata();
         testAutomata.on();
         testAutomata.coin(10);
