@@ -1,17 +1,20 @@
-import static org.junit.Assert.*;
+import org.junit.jupiter.api.Test;
 
-public class AutomataTest {
+import static org.junit.jupiter.api.Assertions.*;
 
-    @org.junit.Test
-    public void on() {
+class AutomataTest {
+
+    @Test
+    void on() {
         Automata testAutomata = new Automata();
         testAutomata.on();
         assertEquals(Automata.STATES.WAIT, testAutomata.getState());
         assertEquals(0, testAutomata.getCash());
     }
 
-    @org.junit.Test
-    public void off() {
+    @Test
+    void off() {
+
         Automata testAutomata = new Automata();
         testAutomata.on();
         testAutomata.coin(10);
@@ -20,8 +23,8 @@ public class AutomataTest {
         assertEquals(0, testAutomata.getCash());
     }
 
-    @org.junit.Test
-    public void coin() {
+    @Test
+    void coin() {
         Automata testAutomata = new Automata();
         testAutomata.on();
         testAutomata.coin(10);
@@ -29,8 +32,8 @@ public class AutomataTest {
         assertEquals(30, testAutomata.getCash());
     }
 
-    @org.junit.Test
-    public void choice() {
+    @Test
+    void choice() {
         Automata testAutomata = new Automata();
         testAutomata.on();
         testAutomata.coin(10);
@@ -42,8 +45,8 @@ public class AutomataTest {
         assertEquals(10, testAutomata.getCash());
     }
 
-    @org.junit.Test
-    public void cancel() {
+    @Test
+    void cancel() {
         Automata testAutomata = new Automata();
         testAutomata.on();
         testAutomata.coin(10);
@@ -51,5 +54,4 @@ public class AutomataTest {
         testAutomata.cancel();
         assertEquals(0, testAutomata.getCash());
     }
-
 }
