@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="UTF-8" ?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<xs:element name="menu">
+		<xs:complexType>
+			<xs:sequence>
+			<!-- <xs:sequence> задает жесткую последовательность подэлементов,
+				но здесь необязательна поскольку подэлемент только один <item> -->
+				<xs:element name="item" maxOccurs="unbounded">
+				<!-- максималное количество вхождений item не ограниченно <maxOccurs="unbounded"> по умолчанию равно 1-->
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="id" type="xs:integer"/>
+							<xs:element name="name" type="xs:string"/>
+							<xs:element name="volume" type="xs:integer"/>
+							<xs:element name="price" type="xs:integer"/>
+							<xs:element name="note" type="xs:string" minOccurs="0"/>
+							 <!-- note необязательный элемент может не входить (и не входит)  <minOccurs="0"> по умолчанию равно 1 -->
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+			<xs:attribute name="version" type="xs:string" use="required"/>
+			<!-- атрибуты для menu, должны писаться в конце, сделанны для тренировки -->
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
