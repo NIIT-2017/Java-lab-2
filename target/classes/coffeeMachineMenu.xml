@@ -1,0 +1,80 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<!-- входной фаил для Javalab2 -->
+<menu version = "001"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="menuSchema.xsd">
+  <!-- xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" пример пространства имён, может ссылаться на что угодно -->
+  <!-- menuSchema.xsd схема для этого файла, должна находится в этой же папке (сделана для тренировки) -->
+
+	<item>
+		<id>1</id>
+		<name>эспрессо</name>
+		<volume>50</volume>
+		<price>25</price>
+	</item>
+	
+	<item>
+		<id>2</id>
+		<name>американо</name>
+		<volume>100</volume>
+		<price>25</price>
+	</item>
+	
+	<item>
+		<id>3</id>
+		<name>кофе с молоком</name>
+		<volume>150</volume>
+		<price>30</price>
+	</item>
+		
+	<item>
+		<id>4</id>
+		<name>капучино</name>
+		<volume>150</volume>
+		<price>40</price>
+	</item>
+	
+	<item>
+		<id>5</id>
+		<name>капучино с шоколадом</name>
+		<volume>150</volume>
+		<price>40</price>
+	</item>
+	
+	<item>
+		<id>6</id>
+		<name>мокачино</name>
+		<volume>150</volume>
+		<price>40</price>
+	</item>
+	
+	<item>
+		<id>7</id>
+		<name>чай чёрный</name>
+		<volume>150</volume>
+		<price>20</price>
+	</item>
+	
+	<item>
+		<id>8</id>
+		<name>горячий шоколад</name>
+		<volume>150</volume>
+		<price>30</price>
+	</item>
+	
+	<item>
+		<id>9</id>
+		<name>двойной шоколад</name>
+		<volume>150</volume>
+		<price>40</price>
+	</item>
+	
+	<item>
+		<id>10</id>
+		<name>молочный шоколад</name>
+		<volume>150</volume>
+		<price>35</price>
+	</item>
+	
+</menu>
+	
