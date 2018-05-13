@@ -3,7 +3,6 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
 import java.io.PrintStream;
 
 import static org.junit.Assert.*;
@@ -12,8 +11,8 @@ public class AutomataTest {
 
     private final ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 
-    File fileXML = new File("./src/main/resources/coffeeMachineMenu.xml"); // прописываем относительный путь к файлу
-    Automata  testCoffeeMachine = new Automata(fileXML); // передаём фаил как аргумент
+    Automata  testCoffeeMachine = new Automata();
+
 
     @Before
     public void setUp() throws Exception {
