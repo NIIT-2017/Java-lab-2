@@ -65,7 +65,7 @@ public class Automata {
         int len = menu.size();
         for (int i = 0; i < len; i++)
             System.out.println(menu.get(i) + " - " + prices.get(i));
-        System.out.println();
+        //System.out.println();
     }
 
     public String PrintState() {  // отображение текущего состояния для пользователя
@@ -81,30 +81,34 @@ public class Automata {
     private void check() {  //проверка наличия необходимой суммы
         state = STATES.CHECK;
         if (cash > prices.get(userChoice-1)) {
+            System.out.println();
             System.out.println("Вы внесли " + cash + " руб. Стоимость напитка: " + prices.get(userChoice-1) + " руб.");
             cash -= prices.get(userChoice-1);
             System.out.println("Ваша сдача: " + cash + " руб. Заберите сдачу!");
-            System.out.println();
+            //System.out.println();
             cash = 0;
             cook();
         } else {
+            System.out.println();
             System.out.println("Вы внесли " + cash + " руб. Стоимость напитка: " + prices.get(userChoice-1) + " руб.");
             System.out.println("Внесите недостающую сумму: " + (prices.get(userChoice-1)-cash) + " руб.");
-            System.out.println();
+           // System.out.println();
             state = STATES.ACCEPT;
         }
     }
 
     public void cancel() {  // отмена сеанса обслуживания пользователем
+        System.out.println();
         System.out.println("Вы отменили заказ.");
         System.out.println("Вы внесли " + cash + " руб. Заберите внесённые средства!");
-        System.out.println();
+        //System.out.println();
         cash = 0;
         state = STATES.WAIT;
     }
 
     private void cook() {  // имитация процесса приготовления напитка
         state = STATES.COOK;
+        System.out.println();
         System.out.println("Пожалуйста, подождите. Ваш напиток готовится... ");
         try {
             for(int k = 0; k < 5; k++) {
