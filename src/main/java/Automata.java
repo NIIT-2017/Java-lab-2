@@ -25,8 +25,6 @@ public class Automata {
         cash = 0; //для хранения текущей суммы
         menu = new ArrayList<String>(); // названия напитков
         prices = new ArrayList<Integer>(); //цены напитков
-        //saleList = new ArrayList<Integer>();  // для отчёта, сколько каких напитков продано
-        //String s;  // для цикла for-each
         try {
             BufferedReader br = new BufferedReader(new FileReader("menu.txt"));
 
@@ -84,6 +82,7 @@ public class Automata {
         state = STATES.CHECK;
         if (cash > prices.get(userChoice-1)) {
             cash -= prices.get(userChoice-1);
+            System.out.println("Вы внесли " + cash + " руб. Стоимость напитка: " + prices.get(userChoice-1) + " руб.");
             System.out.println("Ваша сдача: " + cash + " руб. Заберите сдачу!");
             System.out.println();
             cash = 0;
