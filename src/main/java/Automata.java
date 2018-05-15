@@ -81,8 +81,8 @@ public class Automata {
     private void check() {  //проверка наличия необходимой суммы
         state = STATES.CHECK;
         if (cash > prices.get(userChoice-1)) {
-            cash -= prices.get(userChoice-1);
             System.out.println("Вы внесли " + cash + " руб. Стоимость напитка: " + prices.get(userChoice-1) + " руб.");
+            cash -= prices.get(userChoice-1);
             System.out.println("Ваша сдача: " + cash + " руб. Заберите сдачу!");
             System.out.println();
             cash = 0;
