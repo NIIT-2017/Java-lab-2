@@ -34,7 +34,7 @@ public class AutomataTest {
 
     @Test
     public void choice() throws InterruptedException {
-        assertEquals(Automata.STATES.WAIT, automata.choice(50));
+        assertEquals(Automata.STATES.WAIT, automata.choice(70));
     }
 
     @Test
