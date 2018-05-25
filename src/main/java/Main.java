@@ -9,6 +9,7 @@ public class Main{
         auto.choice(2);
         auto.coin(50);
         auto.choice(2);
+        System.out.println(auto.printMenu()[4][0]+auto.printMenu()[4][1]);
         auto.off();
     }
 }
@@ -42,21 +43,21 @@ class Automata{
             }
             //throw new FileNotFoundException();
         } catch (FileNotFoundException e){
-            System.out.println("File not found "+e);
+            e.printStackTrace();
 
         } catch (IOException e){
-            System.out.println("Error of IO "+e);
+            e.printStackTrace();
         }
         state=STATES.OFF;
     }
 
     public void on(){
         if(state!=STATES.OFF){
-            System.out.println("Automat is already turned on");
+            //System.out.println("Automat is already turned on");
             return;
         }
             state=STATES.WAIT;
-            this.printMenu();
+            //this.printMenu();
     }
 
     public void off(){
@@ -65,7 +66,7 @@ class Automata{
 
     public int coin(int cash){
         if(state!=STATES.WAIT && state!=STATES.ACCEPT) {
-            System.out.println("Error! Automat was broken");
+            //System.out.println("Error! Automat was broken");
             return this.cash;
         }
         state = STATES.ACCEPT;
@@ -73,20 +74,25 @@ class Automata{
         return this.cash;
     }
 
-    private void printMenu(){
+    public String[][] printMenu(){
         int len=menu.size();
+        String[][] arr=new String[len][2];
         for(int i=0;i<len;i++)
-            System.out.println(menu.get(i)+" - "+prices.get(i));
+        {
+            arr[i][0]=menu.get(i);
+            arr[i][1]=prices.get(i).toString();
+        }
+        return arr;
     }
 
     public String PrintState(){
-        System.out.println(state.name());
+        //System.out.println(state.name());
         return state.toString();
     }
 
     public void choice(int ch){
         if(state!=STATES.ACCEPT){
-            System.out.println("Error! Automat was broken");
+            //System.out.println("Error! Automat was broken");
             return;
         }
         choiceProduct=ch;
@@ -95,7 +101,7 @@ class Automata{
 
     private void check(){
         if(state!=STATES.ACCEPT){
-            System.out.println("Error! Automat was broken");
+           // System.out.println("Error! Automat was broken");
             return;
         }
         state=STATES.CHECK;
@@ -104,38 +110,42 @@ class Automata{
             cook();
         }
         else{
-            System.out.println("Not enough money!");
+            //System.out.println("Not enough money!");
             state=STATES.ACCEPT;
         }
     }
 
-    public void cancel(){
-        System.out.println("Take money back "+cash);
+    public int cancel(){
+        //System.out.println("Take money back "+cash);
+        int tempCash=cash;
         cash=0;
         state=STATES.WAIT;
+        return tempCash;
     }
 
     private void cook(){
         if(state!=STATES.CHECK){
-            System.out.println("Error! Automat was broken");
+            //System.out.println("Error! Automat was broken");
             return;
         }
         state=STATES.COOK;
-        System.out.println("Your drink is cooking... ");
+        //System.out.println("Your drink is cooking... ");
         try{
             Thread.sleep(3000);
         }
         catch (InterruptedException e) {
-            System.err.println(e.getMessage());
+            e.printStackTrace();
         }
         finish();
     }
 
-    private void finish(){
-        System.out.println("Take your drink and the change - "+cash+" Good bye!");
+    private int finish(){
+        //System.out.println("Take your drink and the change - "+cash+" Good bye!");
+        int tempCash=cash;
         cash=0;
         sumMoney+=prices.get(choiceProduct);
         state=STATES.WAIT;
+        return tempCash;
     }
 
     public int getSumMoney(){

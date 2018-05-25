@@ -67,11 +67,14 @@ public class AutomataTest {
         Automata a1=new Automata();
         a1.on();
         a1.coin(100);
-        a1.cancel();
+
+        assertEquals( a1.cancel(),100);
         assertEquals("WAIT",a1.PrintState());
+
+        a1.coin(10);
         a1.coin(10);
         a1.choice(1);
-        a1.cancel();
+        assertEquals( a1.cancel(),20);
         assertEquals("WAIT",a1.PrintState());
     }
 
