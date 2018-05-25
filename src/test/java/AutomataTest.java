@@ -29,7 +29,7 @@ public class AutomataTest {
 
     @Test
     public void coin() {
-        assertEquals(30,automata.coin(30));
+        assertEquals(90,automata.coin(30));
     }
 
     @Test
