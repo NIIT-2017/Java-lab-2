@@ -24,7 +24,7 @@ public class AutomataTest {
 
     @Test
     public void cancel() {
-        assertEquals(automata.cash, automata.cancel(automata.cash));
+        assertEquals(automata.getCash(), automata.cancel(automata.getCash()));
     }
 
     @Test

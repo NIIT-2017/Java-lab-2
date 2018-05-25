@@ -1,0 +1,10 @@
+Automata is switched on. Choose your drink.
+MENU: latte: 70, capuccino: 60 ,coffeBlack: 50 ,espresso: 40
+Price of your drink is: 70
+Please input money. Money accepted. You give: 30 rubles
+Not enough money. If you want to continue, add some coins...
+Please input money. Money accepted. You give: 90 rubles
+You give: 90
+Please wait 5 sec. Your drink is preparing...
+Take your change: -40
+Automata is switched off

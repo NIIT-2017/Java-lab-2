@@ -1,17 +1,47 @@
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
+import sun.rmi.runtime.Log;
+import java.io.*;
+import java.util.Enumeration;
 import java.util.Properties;
+import java.util.logging.Logger;
 
 
-    class Automata {
+class Automata {
 
-        public int cash;
-        public int price;
-        public int change;
+        private static int cash;
+        private int price;
+        private int change;
 
-        public Automata() {
+    public Automata(int cash, int price, int change) {
+        this.cash = cash;
+        this.price = price;
+        this.change = change;
+    }
+
+    public static int getCash() {
+        return cash;
+    }
+
+    public void setCash(int cash) {
+        this.cash = cash;
+    }
+
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
+
+    public int getChange() {
+        return change;
+    }
+
+    public void setChange(int change) {
+        this.change = change;
+    }
+
+    public Automata() {
 
         }
 
@@ -38,19 +68,20 @@ import java.util.Properties;
 
         public void on() {
             state = STATES.WAIT;
-            System.out.println("Automata is switched on");
+            AutomataDemo.logfile.println("Automata is switched on. Choose your drink.");
         }
 
         public int cancel(int moneyForReturn){
             state=STATES.WAIT;
             cash=moneyForReturn;
-            System.out.println("Take your money back: "+cash);
+           // AutomataDemo.setLogfile("Take your money back");
+           // AutomataDemo.setLogfile(setCash(cash));
+            setCash(cash);
             return cash;
         }
 
-        public void off() {
-            state = STATES.OFF;
-            System.out.println("Automata is switched off");
+        public void off() { state = STATES.OFF;
+            AutomataDemo.logfile.println("Automata is switched off");
         }
 
         public int coin(int addMoney) {
@@ -58,12 +89,14 @@ import java.util.Properties;
             if(state == STATES.WAIT) {
                 state = STATES.ACCEPT;
                 cash+=addMoney;
+                setCash(cash);
             }else {
                 state = STATES.ACCEPT;
                 cash+=addMoney;
+                setCash(cash);
             }
 //        cash=inputMoney;
-            System.out.println("Money accepted. You give: "+cash+" rubles");
+           AutomataDemo.logfile.println("Please input money. Money accepted. You give: "+cash+" rubles");
             return cash;
         }
 
@@ -74,8 +107,8 @@ import java.util.Properties;
         public STATES choice(int priceOfDrink) throws InterruptedException {
             /* call check cook finish */
             price=priceOfDrink;
-            System.out.println("Please, choose your drink...");
-            System.out.println("price is: "+price);
+          //  System.out.println("Please, choose your drink...");
+         //   System.out.println("price is: "+price);
             if(cash>=price){
                 check(cash,price);
                 cook();
@@ -97,83 +130,129 @@ import java.util.Properties;
             else if(cash>price) {
                 state = STATES.COOK;
                 returnChange(cashInput, priceOfDrink);
-                System.out.println("Take your change..."+returnChange(cashInput,priceOfDrink));
-//                System.out.println("state: "+state);
+                AutomataDemo.logfile.println("Take your change..."+returnChange(cashInput,priceOfDrink));
+
+// System.out.println("state: "+state);
             }
             else if (cash < price) {
                 state = STATES.WAIT;
-                System.out.println("Not enough money. If you want to continue, add some coins...");
-                coin(30);
-                System.out.println(cash);
+                AutomataDemo.logfile.println("Not enough money. If you want to continue, add some coins...");
+                coin(60);
+                AutomataDemo.logfile.println("You give: "+String.valueOf((cash)));
+                setCash(cash);
                 if(cash>=price) {
                     cook();
+                    returnChange(cash, priceOfDrink);
                 }else{
-                    System.out.println("Still not enough money.");
+                    AutomataDemo.logfile.println("Still not enough money.");
                     cancel(cash);
                 }
-//                System.out.println("state: "+state);
+
 
             } else {
                 state = STATES.WAIT;
-                System.out.println("If you don't want to continue, press CANCEL");
+                AutomataDemo.logfile.println("If you don't want to continue, press CANCEL");
                 cancel(cash);
             }
         }
 
         private void cook() throws InterruptedException {//InterruptedException сигнализирует о том, что поток просят завершить его работу. При этом вас не просят немедленно завершить свою работу. Вас просят корректно завершить работу. На это может понадобится некоторое время
-            System.out.println("Please wait 5 sec. Your drink is preparing...");
+            AutomataDemo.logfile.println("Please wait 5 sec. Your drink is preparing...");
+
             Thread.sleep(5000);
             state=STATES.WAIT;
         }
         public int returnChange(int cashInput, int priceOfDrink){
             state=STATES.CHECK;
+            setCash(cash);
             cash=cashInput;
             price=priceOfDrink;
+          //  setPrice(price);
             change=cash-price;
-            return change;
+            setChange(change);
+            AutomataDemo.logfile.println("Take your change: "+getChange());
+            return getChange();
         }
         private void finish(){
             state=STATES.WAIT;
-            System.out.println("Done.");
+            //"Done."
+
 
         }
 
     }
 
-    public class AutomataDemo {//сценарий в этом классе с описанием работы
+     class AutomataDemo {
+    //сценарий с описанием работы
 
-        public static void main(String args[]) throws InterruptedException {
+        public static PrintStream logfile;
+
+         static {
+             try {
+
+                 logfile = new PrintStream(new File("log.txt"));
+             } catch (FileNotFoundException e) {
+                 e.printStackTrace();
+             }
+         }
+
+         public AutomataDemo(PrintStream logfile) throws FileNotFoundException {
+            this.logfile=logfile;
+        }
+
+
+
+
+        public static void main(String args[]) throws InterruptedException, FileNotFoundException {
+
+//            PrintStream logfile = new PrintStream(new File("log.txt"));
+
             File file = new File("src/main/resources/menu.properties");
             Properties properties = new Properties();
+            System.setOut(logfile);
+            Automata nescafe = new Automata(properties);
+            nescafe.on();//включение
+            //logfile.println("Automata is switched on. Choose your drink.");
+            int value = 0;
             try {
+
                 FileInputStream fileInput = new FileInputStream(file);
                 properties.load(fileInput);
-                Integer latte=Integer.parseInt(properties.getProperty("db.latte"));
-                Integer capuccino=Integer.parseInt(properties.getProperty("db.capuccino"));
-                Integer coffeBlack=Integer.parseInt(properties.getProperty("db.coffeBlack"));
-                Integer espresso=Integer.parseInt(properties.getProperty("db.espresso"));
-                System.out.println("latte: "+latte+
-                        ", capuccino: " +capuccino+
-                        " ,coffeBlack: "+coffeBlack+
-                        " ,espresso: "+espresso);
+
+                Enumeration names = properties.keys();
+                while (names.hasMoreElements()) {
+                    String key = (String) names.nextElement();
+                    value = Integer.parseInt(properties.getProperty(key));
+                   // logfile.println(key + ":" + value);
+                }
+                String latte = properties.getProperty("latte");
+                String capuccino = properties.getProperty("capuccino");
+                String coffeBlack = properties.getProperty("coffeBlack");
+                String espresso = properties.getProperty("espresso");
+
+                logfile.println("MENU: " + "latte: " + latte +
+                        ", capuccino: " + capuccino +
+                        " ,coffeBlack: " + coffeBlack +
+                        " ,espresso: " + espresso);
                 fileInput.close();
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            Automata nescafe = new Automata(properties);
-            nescafe.on();//включение
-            nescafe.coin(30);
+
+
             Properties menu = nescafe.getMenu();
-//            System.out.println(properties);
-            int ourChoice;
-            ourChoice=Integer.parseInt(properties.getProperty("db.latte"));
-            System.out.println("You choice is: "+"latte "+ourChoice);
-            nescafe.choice(ourChoice);
-//            int change = nescafe.cancel();
+            String ourChoice;
+            ourChoice = (properties.getProperty("latte"));
+            logfile.println("Price of your drink is: "  + ourChoice);
+            nescafe.coin(30);
+            nescafe.choice(Integer.parseInt((ourChoice)));
+
             nescafe.off();
         }
 
+//        public static void setLogfile() {
+//        }
     }
 
