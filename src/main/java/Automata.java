@@ -76,7 +76,6 @@ public class Automata {
         if ((state == STATES.WAIT) || (state == STATES.ACCEPT)) {
             state = STATES.ACCEPT;
             cash += inputMoney;
-            System.out.println("Your deposit: " + cash + " rub.");      //для наглядности (убрать при необходимости)
         }
     }
 
@@ -85,9 +84,6 @@ public class Automata {
         menuView[0] = " Menu:";
         for (int i = 0; i < menu.length; i++) {
             menuView[i + 1] = (i + 1) + ". " + menu[i] + " - " + prices[i] + " rub.";
-        }
-        for (int i = 0; i < menuView.length; i++) {  //для наглядности (убрать при необходимости)
-            System.out.println(menuView[i]);
         }
         return menuView;
     }
@@ -101,11 +97,9 @@ public class Automata {
         if (state == STATES.ACCEPT && drinkNumber <= menu.length) {
             state = STATES.CHECK;
             userDrink = drinkNumber;
-            System.out.println("You choose " + getDrink(userDrink) + ".");  //для наглядности
             if (check(userDrink)) {
                 cook(userDrink);
             } else {
-                System.out.println("Not enough money. Please enter more money and choose a drink.");//для наглядности
                 state = STATES.ACCEPT;
             }
         } else return;
@@ -120,7 +114,6 @@ public class Automata {
             state = STATES.WAIT;
             cashback = cash;
             cash = 0;
-            System.out.println("Cancel. Your cashback = " + cashback + " rub.");   //для наглядности
             return cashback;
         } else return -1;
     }
@@ -128,7 +121,6 @@ public class Automata {
     private void cook(int userDrink) {               //имитация процесса приготовления напитка
         if (state == STATES.CHECK) {
             state = STATES.COOK;
-            System.out.println("Cooking...");       //для наглядности
             try {
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
@@ -143,8 +135,6 @@ public class Automata {
             state = STATES.WAIT;
             cashback = cash - getPrice(userDrink);
             cash = 0;
-            System.out.println("Your cashback = " + cashback + " rub.");   //для наглядности
-            System.out.println("Thank you! See you later.");
             return cashback;
         } else return -1;
     }
