@@ -39,9 +39,9 @@ public class Automata {
             state = STATES.WAIT; // включаем, переходит в режим ожидания (WAIT) из состояния выключено (OFF)
             printStates();
             /*инструкция по использованию и меню*/
-            System.out.print("Добро пожаловать. Опустите в монетоприёмник 1, 2, 5, 10 рублей. Или в банкнотоприёмник " +
+            /*System.out.print("Добро пожаловать. Опустите в монетоприёмник 1, 2, 5, 10 рублей. Или в банкнотоприёмник " +
                     "50 или 100 рублей. \nВведите число соответствующее номеру напитка. Дождитесь пока автомат приготовит его.\n" +
-                    "Возьмите ваш напиток. Если ваша сумма превысит стоимость напитка, автомат выдаст вам сдачу.\n");
+                    "Возьмите ваш напиток. Если ваша сумма превысит стоимость напитка, автомат выдаст вам сдачу.\n");*/
             printMenu();
             return 1;
         }
@@ -69,16 +69,16 @@ public class Automata {
             cash += money;
             state = STATES.ACCEPT;
             printStates();
-            System.out.println("Вы внесли " + money + " руб.");
-            System.out.println("Общая сумма " + cash + " руб.");
+            //System.out.println("Вы внесли " + money + " руб.");
+            //System.out.println("Общая сумма " + cash + " руб.");
             return 1;
         }
 
         else if (state == STATES.ACCEPT) { // продолжаем принимать деньги
             printStates();
             cash += money;
-            System.out.println("Вы внесли " + money + " руб.");
-            System.out.println("Общая сумма " + cash + " руб.");
+            //System.out.println("Вы внесли " + money + " руб.");
+            //System.out.println("Общая сумма " + cash + " руб.");
             return 2;
         }
 
@@ -140,7 +140,7 @@ public class Automata {
             state = STATES.CHECK;
             printStates();
 
-            System.out.print("\nВы выбрали " + this.menu[chosen - 1] + " за " + this.prices[chosen - 1] + " руб.\n");
+            //System.out.print("\nВы выбрали " + this.menu[chosen - 1] + " за " + this.prices[chosen - 1] + " руб.\n");
 
             check(chosen);
             return 1;
@@ -156,7 +156,7 @@ public class Automata {
         if (state == STATES.ACCEPT) { // отмена операции пользователем
             cashBack = cash;
             cash = 0;
-            System.out.print("Заберите обратно " + cashBack + " руб.\n"); // возврат внесённых денег
+            //System.out.print("Заберите обратно " + cashBack + " руб.\n"); // возврат внесённых денег
             // cashBack = 0; // не занулено для тестирования
             state = STATES.WAIT;
             printStates();
@@ -200,7 +200,7 @@ public class Automata {
             else { // if (cash >= prices[chosen - 1]) { // проверка соответствия cash цене напитка prices
                 cashBack = cash - prices[chosen - 1];
                 if (cashBack > 0) { // выдача сдачи
-                    System.out.print("Заберите вашу сдачу " + cashBack + " руб.\n");
+                    //System.out.print("Заберите вашу сдачу " + cashBack + " руб.\n");
                     cash = 0;
                 }
                 cook(chosen);
@@ -233,11 +233,11 @@ public class Automata {
                 e.printStackTrace();
             }*/
 
-            System.out.print("\nЖдите\n");
-            System.out.print("\nЖдите\n");
-            System.out.print("\nЖдите\n");
+            //System.out.print("\nЖдите\n");
+            //System.out.print("\nЖдите\n");
+            //System.out.print("\nЖдите\n");
 
-            System.out.print("\nВаш " + menu[chosen - 1] + " готов.\n");
+            //System.out.print("\nВаш " + menu[chosen - 1] + " готов.\n");
             //System.out.print("\nТест количества воды " + water + "\n");
             //System.out.print("\nТест количества стаканов " + disposableCup + "\n");
             finish();
