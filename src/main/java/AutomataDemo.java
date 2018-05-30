@@ -1,27 +1,95 @@
+import netscape.javascript.JSObject;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.*;
 import java.net.URL;
+import java.util.HashMap;
+
+import static com.sun.deploy.trace.Trace.flush;
 
 
 public class AutomataDemo {
-    public static void main(String[] args) {
-        URL file=System.class.getResource("/menuPrice.TXT");
+    public static void main(String[]args){
 
-        Automata nescafe = new Automata(new File(file.getFile()));
+        final String addressMenu = "/menuPrice.TXT";
 
-        nescafe.on();
-        nescafe.coin(5);
-        nescafe.choice(3);
-        nescafe.choice(1);
-//nescafe.off();
-        nescafe.coin(25);
-        nescafe.choice(0);
+        Automata nescafe =new Automata();
 
+        AutomataGUIDemo Frame=new AutomataGUIDemo(nescafe);
+        ListenerButton l=new ListenerButton(nescafe,Frame);
+        Frame.workPanel();
+
+nescafe.on();
+
+
+    }
+}
+class ListenerButton implements ActionListener{
+       private AutomataGUIDemo gui;
+       private HashMap<String, String>  data;
+       private Automata Automata;
+       private final String separate;
+       private final String caseWord;
+       private int positionParameter;
+       Thread thrd;
+    ListenerButton(Automata a,AutomataGUIDemo gui){
+        this.gui=gui;
+        this.Automata=a;
+        this.separate=",";
+        this.caseWord="product";
+        this.positionParameter=2;// zero position - caseWord, first -name, second - parametr
+        a.setListener(this);
+
+    }
+    void setDataToGUI(  HashMap<String, String>  data){
+
+        this.data=data;
+        setTextArea();
+    }
+
+    private void setTextArea(){
+        gui.setTextArea(data);
+
+    }
+    public void actionPerformed(ActionEvent e) {
+
+        String line=e.getActionCommand();
+        System.out.println(line);
+        String[]buf= line.split(separate);
+        switch (buf[0]) {
+            case "product":
+                caseWord(buf[positionParameter]);
+                break;
+            case "cash":
+                caseCash(buf[positionParameter]);
+             break;
+            case "service":
+               if(buf[positionParameter].equals("Cancel"))
+                    caseCancel();
+               break;
+                default:
+                   // System.out.println("Error switch caseWord");
+        }
+
+    }
+   private void caseWord(String parameter){
+
+       Automata.choice(Integer.parseInt(parameter));
+   }
+    private void caseCash(String parameter){
+
+        Automata.coin(Integer.parseInt(parameter));
+    }
+    private void caseCancel(){
+
+        Automata.cancel();
 
     }
 }
 
 class Automata {
+    private ListenerButton listener;
     private boolean productErrorMaxPosition=false;
     private int cashRevenue;
     private int cashUser;
@@ -30,63 +98,65 @@ class Automata {
     private String productName;
     private int productPrice;
     private int cashBack;
+    private int positionPriceOfProduct;
     enum STATES {OFF, WAIT, ACCEPT, CHECK, COOK}    ;
     private STATES state;
+    HashMap<String, String>  data;
    private int marker;
-    Automata() {
-       this.state = STATES.OFF;
-        this.cashRevenue = 0;
-        this.cashUser = 0;
-        this.cashBack = 0;
-        this.cashNeedAdd=0;
-        this.menu = setMenu();
+    HashMap<String, String>  setData(String line){
+       HashMap<String, String> data = new HashMap<String, String>();
 
-    }
-String [][] getMenu(){
+                    data.put("cash", "Your cash is "+getCashUser());
+                    data.put("text", line);
+            this.data=data;
+            return data;
+   }
+
+    String [][] getMenu(){
 	return menu;
 }
-		Automata(File in) {
+		Automata() {
         this.marker='#';
         this.state = STATES.OFF;
         this.cashRevenue = 0;
         this.cashUser = 0;
         this.cashBack = 0;
         this.cashNeedAdd = 0;
-        setMenu(in);
+        //this.productPrice=1;
+        setMenu("/menuPrice.TXT");
+        this.positionPriceOfProduct=1;
     }
 
     String getNameMethod() {
         return Thread.currentThread().getStackTrace()[2].getMethodName();
     }
-
+void setListener(ListenerButton l){
+        this.listener=l;
+}
     int getPrice(int productPosition) {
-        return Integer.parseInt(menu[productPosition][1]);
+        return Integer.parseInt(menu[productPosition][positionPriceOfProduct]);
     }
 
     STATES getState() {
     	return state;
     }
-    private String[][] setMenu() {
-        return new String[][]{{"coffee", "20"}, {"tea", "10"}};
-    }
 
-    private void setMenu(File in) {
+
+    private void setMenu(String menuFile) {
         BufferedReader fin;
-
         int sizeArray=0;
 
         try {
-            FileInputStream stream=new FileInputStream(in);
+            InputStream inputStream=System.class.getResourceAsStream(menuFile);
+            fin=new BufferedReader(new InputStreamReader(inputStream));
 
-            fin = new BufferedReader(new FileReader(in));
-          //  fin.mark(0);
             int ch=' ';
-
             for(ch = fin.read();ch!=-1;ch = fin.read())
                 if(ch ==marker)
                     sizeArray++;
-            fin.close();
-            fin = new BufferedReader(new FileReader(in));
+
+            fin=new BufferedReader(new InputStreamReader(System.class.getResourceAsStream(menuFile)));
+
             menu=new String[sizeArray][2];
             ch=' ';
             int i=0;
@@ -100,7 +170,7 @@ String [][] getMenu(){
                 }
             }while (ch!=-1);
         } catch (FileNotFoundException exc) {
-            System.out.println("Error Input of the file: " + in.getName() + " " + exc);
+            System.out.println("Error Input of the file: " + menuFile + " " + exc);
         } catch (IOException e) {
             System.out.println(e);
         }
@@ -130,7 +200,7 @@ if(menu!=null) {
         print(getNameMethod());
     }
 
-    void choice(int productPosition) {
+    void choice (int productPosition) {
       //  cashNeedAdd = 0;
         if (state == STATES.ACCEPT || cashUser > 0) {
             try {
@@ -202,6 +272,7 @@ if(menu!=null) {
         cancel();
         finish();
     }
+
     int getCashUser(){
         return cashUser;
     }
@@ -217,35 +288,50 @@ if(menu!=null) {
     }
 
     void print(String method) {
-
+/*
         if(productErrorMaxPosition==true) {
             System.out.println("Attention: This product is not available for selection");
             return;
         }
             System.out.print(method + " - " + state + "  -  ");
+ */
         if (state == STATES.ACCEPT && productPrice > 0) {
-            System.out.println("Your choice :" + productName + ", price = " + productPrice + " rub.");
+           // System.out.println("Your choice :" + productName + ", price = " + productPrice + " rub.");
+            setData("Your choice :" + productName + ", price = " + productPrice + " rub.");
+            listener.setDataToGUI(data);
             return;
         }
         if (state == STATES.ACCEPT && cashUser > 0 && productPrice == 0) {
-            System.out.println("Your cash: " + cashUser);
+            setData(" ");
+            listener.setDataToGUI(data);
+           // System.out.println("Your cash: " + cashUser);
             if (cashNeedAdd > 0) {
                 System.out.println("Your cash is: " + cashUser + ", You need add " + cashNeedAdd + " rub");
+                setData("Your cash is: " + cashUser + ", You need add " + cashNeedAdd + " rub");
+                listener.setDataToGUI(data);
             }
             return;
         }
         if (state == STATES.ACCEPT && cashBack > 0) {
-            System.out.println("CashBack: " + cashBack);
+
+           // System.out.println("CashBack: " + cashBack);
+            setData("CashBack: " + cashBack);
+            listener.setDataToGUI(data);
             return;
         }
         if (state == STATES.COOK) {
-            System.out.println("Your  " + productName + " is cooking, wait please");
+
+           // System.out.println("Your  " + productName + " is cooking, wait please");
+            setData("Your  " + productName + " is cooking, wait please");
+            listener.setDataToGUI(data);
             try {
                 Thread.sleep(2000);// time for cooking
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-            System.out.println("Your " + productName + " is ready.");
+            setData("Your " + productName + " is ready.");
+            listener.setDataToGUI(data);
+          //  System.out.println("Your " + productName + " is ready.");
             return;
         }
 
