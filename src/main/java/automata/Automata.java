@@ -24,7 +24,7 @@ public class Automata {
      *
      * @param fileName полный путь до файла на основании которого будет создано меню
      */
-    public Automata(String fileName) {
+    public Automata(String fileName, ListenerAutomata listener) {
         File file = new File(fileName);
         if (!file.exists()) {
             meMenu = new MenuGoods(fileName);
@@ -33,15 +33,17 @@ public class Automata {
         this.states = STATES.OFF;
         this.cash = 0;
         this.globalCash = 0;
+        this.listener = listener;
     }
 
     /**
      * Конструктор класса (меню создаётся из файла по умолчанию)
      */
-    public Automata() {
+    public Automata(ListenerAutomata listener) {
         this.states = STATES.OFF;
         this.cash = 0;
         this.globalCash = 0;
+        this.listener = listener;
         meMenu = new MenuGoods();
     }
 

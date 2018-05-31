@@ -79,4 +79,15 @@ public class Goods {
         return timeCook;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        if(obj.getClass() != this.getClass()){
+            return false;
+        }
+        if(this.toString().equals(((Goods)obj).toString())){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
