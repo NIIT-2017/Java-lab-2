@@ -72,7 +72,7 @@ public class AutomataTest implements ListenerAutomata {
             e.printStackTrace();
         }
         assertEquals(2, myGoods.size());
-        assertTrue(myGoods.get(0).getName().equals("Капучино") && myGoods.get(0).getPrice() == 40);
+        assertTrue(myGoods.get(1).getName().equals("Капучино") && myGoods.get(1).getPrice() == 40);
     }
 
 
@@ -156,6 +156,6 @@ public class AutomataTest implements ListenerAutomata {
         assertEquals(Automata.STATES.WAIT, meAutomata.getState());
         assertTrue(meAutomata.off());
         assertEquals(Automata.STATES.OFF, meAutomata.getState());
-        System.out.println("\tИтого приобретены:\n" + myGoods);
+        System.out.println("\tИтого приобретены: " + myGoods);
     }
 }
