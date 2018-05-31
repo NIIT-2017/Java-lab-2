@@ -165,7 +165,7 @@ public class Automata {
         }
 
         else if (state == STATES.CHECK) { // при провале проверки (CHECK) решил сделать возвращение в (ACCEPT), а не сразу в (WAIT)
-            System.out.print(errorLog + "\n");
+            //System.out.print(errorLog + "\n");
             state = STATES.ACCEPT;
             printStates();
             return 2; // не используется
