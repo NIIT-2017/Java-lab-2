@@ -1,7 +1,6 @@
 package automata;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 
 public class Automata {
@@ -10,7 +9,7 @@ public class Automata {
     private volatile STATES states;
     private MenuGoods meMenu;
     private volatile Integer idGoods = null;
-    private ListenerAutomata listener;
+    private final UserAutomata listener;
 
     /**
      *     Перечисление предназначенное для отображения состояния автомата
@@ -19,27 +18,10 @@ public class Automata {
         OFF, WAIT, ACCEPT, COOK
     }
 
-    /**
-     * Конструктор класса (меню создаётся из переданного файла, при условии что он имеет корректный формат)
-     *
-     * @param fileName полный путь до файла на основании которого будет создано меню
-     */
-    public Automata(String fileName, ListenerAutomata listener) {
-        File file = new File(fileName);
-        if (!file.exists()) {
-            meMenu = new MenuGoods(fileName);
-        } else meMenu = new MenuGoods();
-
-        this.states = STATES.OFF;
-        this.cash = 0;
-        this.globalCash = 0;
-        this.listener = listener;
-    }
-
-    /**
+     /**
      * Конструктор класса (меню создаётся из файла по умолчанию)
      */
-    public Automata(ListenerAutomata listener) {
+    public Automata(UserAutomata listener) {
         this.states = STATES.OFF;
         this.cash = 0;
         this.globalCash = 0;
@@ -89,7 +71,6 @@ public class Automata {
             this.cash += cash;
             return true;
         } else {
-            listener.getStatus(states);
             return false;
         }
     }

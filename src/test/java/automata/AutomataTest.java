@@ -5,19 +5,14 @@ import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
 
-public class AutomataTest implements ListenerAutomata {
+public class AutomataTest implements UserAutomata {
 
     public static ArrayList<Goods> myGoods = new ArrayList();
 
     public void getGoods(Goods goods) {
         myGoods.add(goods);
-        System.out.println("Перечень приобретённых продуктов обновлён!\nПолучено: " + goods);
+        System.out.println("\tПеречень приобретённых продуктов обновлён!\nПолучено: " + goods);
     }
-
-    public void getStatus(Automata.STATES states) {
-        System.out.println("Automat is " + states);
-    }
-
 
     /**
      * Тестирование функции включения автомата
@@ -48,7 +43,7 @@ public class AutomataTest implements ListenerAutomata {
     }
 
     /**
-     * Тестирование внесения средств, возврата средств и получения сдачи
+     * Тестирование приёма и выполнения заказа
      */
     @org.junit.Test
     public void choiceTest() {
@@ -95,7 +90,6 @@ public class AutomataTest implements ListenerAutomata {
      */
     @org.junit.Test
     public void globalTest() {
-        myGoods.clear();
         //Тестирование пакета как чёрного ящика:)))
         Automata meAutomata = new Automata(this);
         //После создания экземпляра автомат должен быть выключен. Проверяем

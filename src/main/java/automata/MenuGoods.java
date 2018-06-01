@@ -1,10 +1,8 @@
 package automata;
 
 import com.google.gson.Gson;
-import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
+
+import java.io.*;
 import java.net.URL;
 
 /**
@@ -12,37 +10,23 @@ import java.net.URL;
  */
 class MenuGoods {
     private final Goods[] meMenu;
-    MenuGoods(String fileName)  {
-        Gson gson = new Gson();
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(fileName));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
-        meMenu = gson.fromJson(reader, Goods[].class);
-    }
 
-    MenuGoods()  {
-        URL file = getClass().getResource("/menu.json");
+    MenuGoods() {
         Gson gson = new Gson();
-        BufferedReader reader = null;
-        try {
-            reader = new BufferedReader(new FileReader(new File(file.getFile())));
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        }
+        InputStream in = MenuGoods.class.getResourceAsStream("/menu.json");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(in));
         meMenu = gson.fromJson(reader, Goods[].class);
     }
 
     /**
      * Получение строкового представления объекта меню
+     *
      * @return меню в строковом представлении
      */
     @Override
-    public String toString(){
+    public String toString() {
         String strOut = "";
-        for (int i = 0; i < meMenu.length; i++){
+        for (int i = 0; i < meMenu.length; i++) {
             strOut += (i + 1) + ". " + meMenu[i].toString() + "\n";
         }
         return strOut;
@@ -50,19 +34,21 @@ class MenuGoods {
 
     /**
      * Получение количества наименований продуктов которое содержит меню
+     *
      * @return количество наименований продуктов которое содержит меню
      */
-    int getSizeMenu(){
+    int getSizeMenu() {
         return meMenu.length;
     }
 
     /**
      * Получение стоимости продукта имеющего переданное id
+     *
      * @param id id прдукта
      * @return стоимость продукта
      */
-    public int getPrice(int id){
-        if(id <= meMenu.length) {
+    public int getPrice(int id) {
+        if (id <= meMenu.length) {
             return meMenu[id - 1].getPrice();
         } else {
             return 0;
@@ -71,31 +57,37 @@ class MenuGoods {
 
     /**
      * Получение наименования(названия) продукта
+     *
      * @param id id продукта наименование(название) которого нужно получить
      * @return название/наименование продукта
      */
-    public String getName(int id){
-        if(id <= meMenu.length) {
+    public String getName(int id) {
+        if (id <= meMenu.length) {
             return meMenu[id - 1].getName();
-        } else{
+        } else {
             return null;
         }
     }
 
     /**
      * Получение времени приготовления/подготовки продукта
+     *
      * @param id id продукта время приготовления/подготовки требуется получить
      * @return время приготовления/подготовки продукта
      */
-    public int getTimeCook(int id){
-        if(id <= meMenu.length) {
+    public int getTimeCook(int id) {
+        if (id <= meMenu.length) {
             return meMenu[id - 1].getTimeCook();
         } else {
             return 0;
         }
     }
 
-    Goods getGoods(int id){
-        return meMenu[id - 1];
+    Goods getGoods(int id) {
+        if (id > 0 && id <= meMenu.length) {
+            return meMenu[id - 1];
+        } else {
+            return null;
+        }
     }
 }
