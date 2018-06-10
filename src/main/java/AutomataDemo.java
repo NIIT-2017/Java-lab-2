@@ -55,7 +55,7 @@ class ListenerButton implements ActionListener{
     public void actionPerformed(ActionEvent e) {
 
         String line=e.getActionCommand();
-        System.out.println(line);
+        //System.out.println(line);
         String[]buf= line.split(separate);
         switch (buf[0]) {
             case "product":
