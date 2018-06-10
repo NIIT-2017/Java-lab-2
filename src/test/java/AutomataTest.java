@@ -1,6 +1,6 @@
 import org.junit.Test;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 public class AutomataTest {
 
@@ -45,7 +45,7 @@ public class AutomataTest {
     @Test
     public void coin() {
         Automata Automata=new Automata();
-        AutomataGUIDemo A=new AutomataGUIDemo( Automata);
+        //AutomataGUIDemo A=new AutomataGUIDemo( Automata);
         Automata.on();
         Automata.coin(20);
         Automata.coin(2);
@@ -56,7 +56,7 @@ public class AutomataTest {
     @Test
     public void choice() {
         Automata Automata=new Automata();
-        AutomataGUIDemo A=new AutomataGUIDemo(Automata);
+       // AutomataGUIDemo A=new AutomataGUIDemo(Automata);
         Automata.on();
         Automata.coin(40);
         Automata.choice(1);//the choice of drink 10
@@ -69,7 +69,7 @@ public class AutomataTest {
     @Test
     public void cancel() {
         Automata Automata=new Automata();
-        AutomataGUIDemo A=new AutomataGUIDemo(Automata);
+        //AutomataGUIDemo A=new AutomataGUIDemo(Automata);
         Automata.on();
         Automata.coin(20);
         Automata.cancel();

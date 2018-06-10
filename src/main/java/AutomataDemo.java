@@ -298,12 +298,20 @@ if(menu!=null) {
         if (state == STATES.ACCEPT && productPrice > 0) {
            // System.out.println("Your choice :" + productName + ", price = " + productPrice + " rub.");
             setData("Your choice :" + productName + ", price = " + productPrice + " rub.");
-            listener.setDataToGUI(data);
+            try {
+                listener.setDataToGUI(data);
+            }catch (NullPointerException e){
+                ;//empty . this create only for test
+            }
             return;
         }
         if (state == STATES.ACCEPT && cashUser > 0 && productPrice == 0) {
             setData(" ");
-            listener.setDataToGUI(data);
+            try {
+                listener.setDataToGUI(data);
+            }catch (NullPointerException e){
+                ;//empty . this create only for test
+            }
            // System.out.println("Your cash: " + cashUser);
             if (cashNeedAdd > 0) {
                 System.out.println("Your cash is: " + cashUser + ", You need add " + cashNeedAdd + " rub");
@@ -316,21 +324,33 @@ if(menu!=null) {
 
            // System.out.println("CashBack: " + cashBack);
             setData("CashBack: " + cashBack);
-            listener.setDataToGUI(data);
+            try {
+                listener.setDataToGUI(data);
+            }catch (NullPointerException e){
+                ;//empty . this create only for test
+            }
             return;
         }
         if (state == STATES.COOK) {
 
            // System.out.println("Your  " + productName + " is cooking, wait please");
             setData("Your  " + productName + " is cooking, wait please");
-            listener.setDataToGUI(data);
+            try {
+                listener.setDataToGUI(data);
+            }catch (NullPointerException e){
+                ;//empty . this create only for test
+            }
             try {
                 Thread.sleep(2000);// time for cooking
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
             setData("Your " + productName + " is ready.");
-            listener.setDataToGUI(data);
+            try {
+                listener.setDataToGUI(data);
+            }catch (NullPointerException e){
+                ;//empty . this create only for test
+            }
           //  System.out.println("Your " + productName + " is ready.");
             return;
         }
