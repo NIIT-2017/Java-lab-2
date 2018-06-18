@@ -91,7 +91,6 @@ class Automata{
         if (state==STATES.WAIT) state=STATES.ACCEPT;
         if (state==STATES.ACCEPT){
             cash+=money;
-            System.out.println("cash: " + cash);
         }
     }
 
