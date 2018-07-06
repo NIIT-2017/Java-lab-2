@@ -43,22 +43,12 @@ public class Automata {
     public void on() {
         if (state == STATES.OFF) {
             state  = STATES.WAIT;
-            System.out.println("You turned on the coffee machine!");
-        }
-        else {
-            System.out.println("The machine is already on!");
         }
     }
 
     //Switching off the automata
     public void off() {
-        if (state  == STATES.WAIT) {
-            System.out.println("You turned off the coffee machine!");
             state = STATES.OFF;
-        }
-        else {
-            System.out.print("Automat is already off!\n");
-        }
     }
 
     //Depositing money by user

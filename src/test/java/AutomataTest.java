@@ -16,10 +16,8 @@ public class AutomataTest {
     public void off() {
         Automata a = new Automata();
         a.on();
-        a.coin(100);
         a.off();
         assertEquals(Automata.STATES.OFF, a.getState());
-        assertEquals(0, a.getCash());
     }
 
     @org.junit.Test
