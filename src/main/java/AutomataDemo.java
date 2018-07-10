@@ -1,3 +1,16 @@
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.parser.ParseException;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.Iterator;
+
 class Automata {
 
     enum States {
@@ -5,15 +18,49 @@ class Automata {
     }
 
     int cash;
-    private String[] menu;
-    private int[] prices;
+    //private String[] menu;
+    //private int[] prices;
     States state;
 
+    ArrayList<String> menu2;
+    ArrayList<Integer> prices2;
+/*
     Automata() {
         this.cash = 0;
         this.menu = new String[]{"black coffee", "coffee with milk", "latte macchiato", "tea"};
         this.prices = new int[]{20, 30, 40, 15};
         this.state = States.OFF;
+    }
+*/
+    Automata() {
+        this.cash = 0;
+        this.state = States.OFF;
+        this.menu2 = new ArrayList<String>();
+        this.prices2 = new ArrayList<Integer>();
+        importJSON();
+    }
+
+    private void importJSON () {
+
+
+        JSONParser parser = new JSONParser();
+        //URL file = System.class.getResource("/goods");
+        try
+        {
+            Object obj=parser.parse(new FileReader("./src/main/resources/goods"));
+            JSONArray goods =(JSONArray)obj;
+            Iterator goodIterator=goods.iterator();
+            while(goodIterator.hasNext()) {
+                JSONObject good=(JSONObject)goodIterator.next();
+                String name=good.get("name").toString();
+                menu2.add(name);
+                int price=Integer.parseInt(good.get("price").toString());
+                prices2.add(price);
+            }
+        }
+        catch(FileNotFoundException ex){}
+        catch(IOException ex) {}
+        catch (ParseException ex) {}
     }
 
 
@@ -48,8 +95,8 @@ class Automata {
     public String getMenu() {
         String a = "";
         if (this.state != States.OFF) {
-            for (int i = 0; i < menu.length; i++) {
-                a += menu[i] + "=" + prices[i] + '\n';
+            for (int i = 0; i < menu2.size(); i++) {
+                a += menu2.get(i) + "=" + prices2.get(i) + '\n';
             }
             return a;
         }
@@ -99,8 +146,8 @@ class Automata {
 
     private boolean check(int a) {
         this.state = States.CHECK;
-        if (this.cash >= this.prices[a]) {
-            this.cash -= this.prices[a];
+        if (this.cash >= this.prices2.get(a)) {
+            this.cash -= this.prices2.get(a);
             System.out.println ("Денег хватает");
             return true;
         } else {
@@ -152,6 +199,7 @@ public class AutomataDemo {
 
         Automata nescafe = new Automata();
 
+
         nescafe.on();
         System.out.println(nescafe.getMenu());
 
@@ -163,7 +211,6 @@ public class AutomataDemo {
         nescafe.off();
 
         nescafe.printAll();
-
     }
 
 }

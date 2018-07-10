@@ -26,10 +26,11 @@ public class AutomataTest {
 
     @org.junit.Test
     public void getMenu() {
-        String expStr = "black coffee=20\n" +
-                "coffee with milk=30\n" +
-                "latte macchiato=40\n" +
-                "tea=15\n";
+        String expStr = "Latte=30\n" +
+                "Coffe=20\n" +
+                "Cappuccino=30\n" +
+                "Tea=15\n" +
+                "Tea with lemon=15\n";
         Automata test = new Automata();
         test.on();
         assertEquals (expStr, test.getMenu());
