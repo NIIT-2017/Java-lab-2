@@ -18,8 +18,6 @@ class Automata {
     private double cash;
     private STATES state;
 
-    private final String PATH = "..\\resources\\goods\\main_menu.json";
-
     private String choice;
 
     private static HashMap<String, Double> jsonParseMap;
@@ -37,7 +35,9 @@ class Automata {
     private void parseMenu() {
         JSONParser parser = new JSONParser();
         try {
-            JSONArray jsonArray = (JSONArray) parser.parse(new FileReader(PATH));
+            InputStream stream = Automata.class.getResourceAsStream("/main_menu.json");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+            JSONArray jsonArray = (JSONArray) parser.parse(reader);
             JSONObject jsonObject;
             Iterator<JSONObject> iterator = jsonArray.iterator();
             while(iterator.hasNext()) {
@@ -92,7 +92,9 @@ class Automata {
     private void updateJsonMenu(String s) {
         JSONParser parser = new JSONParser();
         try {
-            JSONArray jsonArray = (JSONArray) parser.parse(new FileReader(PATH));
+            InputStream stream = Automata.class.getResourceAsStream("/main_menu.json");
+            BufferedReader reader = new BufferedReader(new InputStreamReader(stream));
+            JSONArray jsonArray = (JSONArray) parser.parse(reader);
             JSONObject jsonObject;
             Iterator<JSONObject> iterator = jsonArray.iterator();
             while(iterator.hasNext()) {
