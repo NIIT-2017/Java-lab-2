@@ -18,7 +18,7 @@ class Automata {
     private double cash;
     private STATES state;
 
-    private final String PATH = "main_menu.json";
+    private final String PATH = "../resources/main_menu.json";
 
     private String choice;
 
