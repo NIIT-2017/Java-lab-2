@@ -32,7 +32,7 @@ class Automata {
     }
 
     private void parseMenu() {
-        final String PATH = "D:\\IdeaProjects\\AutomataDemo\\src\\main\\resources\\main_menu.json";
+        final String PATH = "Java-lab-2\\target\\classes\\main_menu.json";
         JSONParser parser = new JSONParser();
         try {
             JSONArray jsonArray = (JSONArray) parser.parse(new FileReader(PATH));
@@ -88,7 +88,7 @@ class Automata {
     }
 
     private void updateJsonMenu(String s) {
-        final String PATH = "D:\\IdeaProjects\\AutomataDemo\\src\\main\\resources\\main_menu.json";
+        final String PATH = "Java-lab-2\\target\\classes\\main_menu.json";
         JSONParser parser = new JSONParser();
         try {
             JSONArray jsonArray = (JSONArray) parser.parse(new FileReader(PATH));
