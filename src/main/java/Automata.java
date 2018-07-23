@@ -19,6 +19,8 @@ class Automata {
     private STATES state;
 
     private String choice;
+    
+    private final String PATH = "Java-lab-2\\src\\main\\resources\\main_menu.json";
 
     private static HashMap<String, Double> jsonParseMap;
     private Set<Entry<String, Double>> menu;
@@ -32,7 +34,6 @@ class Automata {
     }
 
     private void parseMenu() {
-        final String PATH = "Java-lab-2\\src\\main\\resources\\main_menu.json";
         JSONParser parser = new JSONParser();
         try {
             JSONArray jsonArray = (JSONArray) parser.parse(new FileReader(PATH));
@@ -88,7 +89,6 @@ class Automata {
     }
 
     private void updateJsonMenu(String s) {
-        final String PATH = "Java-lab-2\\src\\main\\resources\\main_menu.json";
         JSONParser parser = new JSONParser();
         try {
             JSONArray jsonArray = (JSONArray) parser.parse(new FileReader(PATH));
