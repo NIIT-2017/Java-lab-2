@@ -1,3 +1,5 @@
+import Automata;
+
 public class AutomataDemo {
     public static void main(String[] args) {
         Automata a = new Automata();
