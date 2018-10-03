@@ -1,6 +1,7 @@
 package AutomatDemo;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.*;
 
 class NoSuchDrinkException extends RuntimeException{
@@ -28,7 +29,7 @@ public class AutomatDemo {
         else System.out.println("Подождите, выполняется операция!");
     }
 
-    private void cashReset(){ // этот метод используется GUI-версией AutomatDemo
+    public void cashReset(){ // этот метод используется GUI-версией AutomatDemo
         cash=0;
         state=States.WAIT;}
 
@@ -98,7 +99,7 @@ public class AutomatDemo {
     private void  setMenu() throws IOException{
         String menuStr;
         Integer priceNum;
-        try (FileInputStream in = new FileInputStream(System.getProperty("user.dir")+"/src/main/resources/MENU.properties")) {
+        try (InputStream in = getClass().getResourceAsStream("/MENU.properties")) {
             Properties props = new Properties();
             props.load(in);
             Enumeration en = props.keys();
@@ -141,7 +142,7 @@ public class AutomatDemo {
         }
     }
 
-    private void check() throws InterruptedException {
+    public void check() throws InterruptedException {
         if (state == States.ACCEPT) {
             if (currentDrinkPrice == cash)
             {state=States.CHECK;
@@ -169,7 +170,7 @@ public class AutomatDemo {
         }
     }
 
-    private void finish(){
+    public void finish(){
         cash = 0;
         state = States.WAIT;
     }
