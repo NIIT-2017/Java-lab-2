@@ -10,9 +10,9 @@ import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.Iterator;
 
-public class Automata {
+class Automata {
 
-    enum States {
+    private enum States {
         OFF, WAIT, ACCEPT, CHECK, COOK
     }
 
