@@ -18,18 +18,18 @@ class Connect{
     public Connect(String[] args) {
         try {
             switch (args.length) {
-                case 0 -> {
+                case 0 :
                     stdIn(null);
                     stdOut(null);
-                }
-                case 1 -> {
+                    break;
+                case 1 :
                     if (args[0].equalsIgnoreCase("STDIN"))
                         stdIn(null);
                     else
                         in = Files.newBufferedReader(Paths.get(args[0]));
                     stdOut(null);
-                }
-                case 2 -> {
+                    break;
+                case 2 :
                     if (args[0].equalsIgnoreCase("STDIN"))
                         stdIn(null);
                     else
@@ -38,8 +38,9 @@ class Connect{
                         stdOut(null);
                     else
                         out = new BufferedWriter(new FileWriter(new File(args[1])));
-                }
-                default -> System.out.println("Invalid number of parameters!");
+                    break;
+                default :
+                    System.out.println("Invalid number of parameters!");
             }
         }
         catch (IOException ex){
