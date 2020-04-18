@@ -137,17 +137,19 @@ class Automata {
             if (params[0].equalsIgnoreCase(command.toString()))
                 cmnd = command;
         }
-        switch(cmnd){
-            case EXIT -> continuation = false;
-            case ON -> {
+        switch (cmnd) {
+            case EXIT:
+                continuation = false;
+                break;
+            case ON:
                 if (state == STATES.OFF)
                     on();
-            }
-            case OFF -> {
+                break;
+            case OFF:
                 if (state == STATES.WAIT)
                     off();
-            }
-            case COIN -> {
+                break;
+            case COIN:
                 if (state == STATES.WAIT || state == STATES.ACCEPT) {
                     if (params.length >= 2) {
                         try {
@@ -158,36 +160,38 @@ class Automata {
                     } else
                         connect.write("You must give money if you want to do \"COIN\"");
                 }
-            }
-            case GETMENU -> {
+                break;
+            case GETMENU:
                 if (state != STATES.OFF)
                     getMenu();
-            }
-            case GETSTATE -> {
+                break;
+            case GETSTATE:
                 if (state != STATES.OFF)
                     getState();
-            }
-            case CHOICE -> {
-                if (state == STATES.ACCEPT){
+                break;
+            case CHOICE:
+                if (state == STATES.ACCEPT) {
                     if (params.length >= 2)
                         choice(params[1]);
                     else
                         connect.write("You must write name of beverage to do \"CHOICE\"");
                 }
-            }
-            case CHECK -> {
+                break;
+            case CHECK:
                 if (state == STATES.CHECK)
                     check();
-            }
-            case CANCEL -> {
+                break;
+            case CANCEL:
                 if (state != STATES.OFF && state != STATES.WAIT)
                     cancel();
-            }
-            case COOK -> {
+                break;
+            case COOK:
                 if (state == STATES.CHECK)
                     cook();
-            }
-            default -> connect.write("Unknown command \"" + params[0] + "\"");
+                break;
+            default:
+                connect.write("Unknown command \"" + params[0] + "\"");
+                break;
         }
         return continuation;
     }
@@ -195,27 +199,29 @@ class Automata {
     //Change the automate state and give a describe of the state
     private void setState(STATES state){
         switch (state) {
-            case OFF -> {
+            case OFF:
                 this.state = STATES.OFF;
                 connect.write("The automate is disable. Possible actions : ON");
-            }
-            case WAIT -> {
+                break;
+            case WAIT:
                 this.state = STATES.WAIT;
                 connect.write("The automate is waiting for your command. Possible action : OFF, COIN, GETMENU, GETSTATE");
-            }
-            case ACCEPT -> {
+                break;
+            case ACCEPT:
                 this.state = STATES.ACCEPT;
                 connect.write("You money is accepted. Possible actions : COIN, CHOICE, CANCEL, GETMENU, GETSTATE");
-            }
-            case CHECK -> {
+                break;
+            case CHECK:
                 this.state = STATES.CHECK;
                 connect.write("You made a choice. Possible actions : CANCEL, CHECK, COOK, GETMENU, GETSTATE");
-            }
-            case COOK -> {
+                break;
+            case COOK:
                 this.state = STATES.COOK;
                 connect.write("The cooking has started. Possible actions : just relax and wait");
-            }
-            default -> connect.write("Unknown state!");
+                break;
+            default:
+                connect.write("Unknown state!");
+                break;
         }
     }
 }
