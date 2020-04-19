@@ -1,3 +1,4 @@
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -7,192 +8,211 @@ import org.junit.Test;
 public class AutomataTest {
     ArrayList <String> menuTest = new ArrayList<String>(Arrays.asList("000","aaa","bbb","ccc"));
     ArrayList <Double> pricesTest = new ArrayList<Double>(Arrays.asList(0.0,10.0,20.0,30.0));
-    Automata autumataTest = new Automata(menuTest, pricesTest);
+    Automata automataTest = new Automata(menuTest, pricesTest);
+    ButtonsInDisplayOut bdioTest = new ButtonsInDisplayOut(automataTest);
+    DecimalFormat df1 = new DecimalFormat("#0.0");
 
     @org.junit.Test
     public void on1() {
-        autumataTest.on();
-        assertEquals(Automata.STATES.WAIT,autumataTest.getState());
-        assertEquals(0.0,autumataTest.getCash());
-        assertEquals(0.0,autumataTest.getChange());
+        automataTest.setBdio(bdioTest);
+        automataTest.on();
+        assertEquals(Automata.STATES.WAIT,automataTest.getState());
+        assertEquals("0.0",df1.format(automataTest.getCash()));
+        assertEquals("0.0",df1.format(automataTest.getChange()));
     }
 
     @org.junit.Test
     public void on2() {
-        autumataTest.setState(Automata.STATES.COOK);
+        automataTest.setBdio(bdioTest);
+        automataTest.setState(Automata.STATES.COOK);
 
-        autumataTest.on();
-        assertEquals(Automata.STATES.COOK,autumataTest.getState());
-        assertEquals(0.0,autumataTest.getCash());
-        assertEquals(0.0,autumataTest.getChange());
+        automataTest.on();
+        assertEquals(Automata.STATES.COOK,automataTest.getState());
+        assertEquals("0.0",df1.format(automataTest.getCash()));
+        assertEquals("0.0",df1.format(automataTest.getChange()));
     }
 
     @org.junit.Test
     public void off1() {
-        autumataTest.off();
-        assertEquals(Automata.STATES.OFF,autumataTest.getState());
+        automataTest.setBdio(bdioTest);
+        automataTest.off();
+        assertEquals(Automata.STATES.OFF,automataTest.getState());
     }
 
     @org.junit.Test
     public void off2() {
-        autumataTest.setState(Automata.STATES.COOK);
+        automataTest.setBdio(bdioTest);
+        automataTest.setState(Automata.STATES.COOK);
 
-        autumataTest.off();
-        assertEquals(Automata.STATES.COOK,autumataTest.getState());
+        automataTest.off();
+        assertEquals(Automata.STATES.COOK,automataTest.getState());
     }
 
     @org.junit.Test
     public void coin1() {
-        autumataTest.setState(Automata.STATES.WAIT);
-        autumataTest.setCash(0.0);
-        autumataTest.setChange(0.0);
+        automataTest.setBdio(bdioTest);
+        automataTest.setState(Automata.STATES.WAIT);
+        automataTest.setCash(0.0);
+        automataTest.setChange(0.0);
 
-        autumataTest.coin(10.0);
-        assertEquals(Automata.STATES.ACCEPT,autumataTest.getState());
-        assertEquals(10.0,autumataTest.getCash());
-        assertEquals(0.0,autumataTest.getChange());
+        automataTest.coin(10.0);
+        assertEquals(Automata.STATES.ACCEPT,automataTest.getState());
+        assertEquals("10.0",df1.format(automataTest.getCash()));
+        assertEquals("0.0",df1.format(automataTest.getChange()));
     }
 
     @org.junit.Test
     public void coin2() {
-        autumataTest.setState(Automata.STATES.WAIT);
-        autumataTest.setCash(10.0);
-        autumataTest.setChange(0.0);
+        automataTest.setBdio(bdioTest);
+        automataTest.setState(Automata.STATES.WAIT);
+        automataTest.setCash(10.0);
+        automataTest.setChange(0.0);
 
-        autumataTest.coin(20.0);
-        assertEquals(Automata.STATES.ACCEPT,autumataTest.getState());
-        assertEquals(30.0,autumataTest.getCash());
-        assertEquals(0.0,autumataTest.getChange());
+        automataTest.coin(20.0);
+        assertEquals(Automata.STATES.ACCEPT,automataTest.getState());
+        assertEquals("30.0",df1.format(automataTest.getCash()));
+        assertEquals("0.0",df1.format(automataTest.getChange()));
     }
 
-    @org.junit.Test
+   @org.junit.Test
     public void coin3() {
-        autumataTest.setState(Automata.STATES.COOK);
-        autumataTest.setCash(0.0);
-        autumataTest.setChange(0.0);
+        automataTest.setBdio(bdioTest);
+        automataTest.setState(Automata.STATES.COOK);
+        automataTest.setCash(0.0);
+        automataTest.setChange(0.0);
 
-        autumataTest.coin(20.0);
-        assertEquals(Automata.STATES.COOK,autumataTest.getState());
-        assertEquals(0.0,autumataTest.getCash());
-        assertEquals(20.0,autumataTest.getChange());
+        automataTest.coin(20.0);
+        assertEquals(Automata.STATES.COOK,automataTest.getState());
+        assertEquals("0.0",df1.format(automataTest.getCash()));
+        assertEquals("20.0",df1.format(automataTest.getChange()));
     }
 
     @org.junit.Test
     public void cancel1() {
-        autumataTest.setState(Automata.STATES.ACCEPT);
-        autumataTest.setCash(20.0);
-        autumataTest.setChange(0.0);
+        automataTest.setBdio(bdioTest);
+        automataTest.setState(Automata.STATES.ACCEPT);
+        automataTest.setCash(20.0);
+        automataTest.setChange(0.0);
 
-        autumataTest.cancel();
-        assertEquals(Automata.STATES.WAIT,autumataTest.getState());
-        assertEquals(0.0,autumataTest.getCash());
-        assertEquals(20.0,autumataTest.getChange());
+        automataTest.cancel();
+        assertEquals(Automata.STATES.WAIT,automataTest.getState());
+        assertEquals("0.0",df1.format(automataTest.getCash()));
+        assertEquals("20.0",df1.format(automataTest.getChange()));
 
     }
 
     @org.junit.Test
     public void cancel2() {
-        autumataTest.setState(Automata.STATES.CHECK);
-        autumataTest.setCash(10.0);
-        autumataTest.setChange(0.0);
+        automataTest.setBdio(bdioTest);
+        automataTest.setState(Automata.STATES.CHECK);
+        automataTest.setCash(10.0);
+        automataTest.setChange(0.0);
 
-        autumataTest.cancel();
-        assertEquals(Automata.STATES.WAIT,autumataTest.getState());
-        assertEquals(0.0,autumataTest.getCash());
-        assertEquals(10.0,autumataTest.getChange());
+        automataTest.cancel();
+        assertEquals(Automata.STATES.WAIT,automataTest.getState());
+        assertEquals("0.0",df1.format(automataTest.getCash()));
+        assertEquals("10.0",df1.format(automataTest.getChange()));
     }
 
     @org.junit.Test
     public void cancel3() {
-        autumataTest.setState(Automata.STATES.COOK);
-        autumataTest.setCash(10.0);
-        autumataTest.setChange(0.0);
+        automataTest.setBdio(bdioTest);
+        automataTest.setState(Automata.STATES.COOK);
+        automataTest.setCash(10.0);
+        automataTest.setChange(0.0);
 
-        autumataTest.cancel();
-        assertEquals(Automata.STATES.COOK,autumataTest.getState());
-        assertEquals(10.0,autumataTest.getCash());
-        assertEquals(0.0,autumataTest.getChange());
+        automataTest.cancel();
+        assertEquals(Automata.STATES.COOK,automataTest.getState());
+        assertEquals("10.0",df1.format(automataTest.getCash()));
+        assertEquals("0.0",df1.format(automataTest.getChange()));
     }
 
     @org.junit.Test
     public void choice1() {
-        autumataTest.setState(Automata.STATES.ACCEPT);
-        autumataTest.setCash(10.0);
-        autumataTest.setChange(0.0);
+        automataTest.setBdio(bdioTest);
+        automataTest.setState(Automata.STATES.ACCEPT);
+        automataTest.setCash(10.0);
+        automataTest.setChange(0.0);
 
-        autumataTest.choice(1); //cook expected
-        assertEquals(Automata.STATES.COOK,autumataTest.getState());
+        automataTest.choice(1); //cook expected
+        assertEquals(Automata.STATES.WAIT,automataTest.getState());
     }
 
     @org.junit.Test
     public void choice2() {
-        autumataTest.setState(Automata.STATES.ACCEPT);
-        autumataTest.setCash(10.0);
-        autumataTest.setChange(0.0);
+        automataTest.setBdio(bdioTest);
+        automataTest.setState(Automata.STATES.ACCEPT);
+        automataTest.setCash(10.0);
+        automataTest.setChange(0.0);
 
-        autumataTest.choice(2); // cancel expected
-        assertEquals(Automata.STATES.WAIT,autumataTest.getState());
-        assertEquals(0.0,autumataTest.getCash());
-        assertEquals(10.0,autumataTest.getChange());
+        automataTest.choice(2); // cancel expected
+        assertEquals(Automata.STATES.WAIT,automataTest.getState());
+        assertEquals("0.0",df1.format(automataTest.getCash()));
+        assertEquals("10.0",df1.format(automataTest.getChange()));
     }
 
     @org.junit.Test
     public void choice3() {
-        autumataTest.setState(Automata.STATES.ACCEPT);
-        autumataTest.setCash(30.0);
-        autumataTest.setChange(0.0);
+        automataTest.setBdio(bdioTest);
+        automataTest.setState(Automata.STATES.ACCEPT);
+        automataTest.setCash(30.0);
+        automataTest.setChange(0.0);
 
-        autumataTest.choice(2); // cookl expected
-        assertEquals(Automata.STATES.COOK,autumataTest.getState());
+        automataTest.choice(2); // cookl expected
+        assertEquals(Automata.STATES.WAIT,automataTest.getState());
     }
 
     @org.junit.Test
     public void choice4() {
-        autumataTest.setState(Automata.STATES.WAIT);
-        autumataTest.setCash(0.0);
-        autumataTest.setChange(0.0);
+        automataTest.setBdio(bdioTest);
+        automataTest.setState(Automata.STATES.WAIT);
+        automataTest.setCash(0.0);
+        automataTest.setChange(0.0);
 
-        autumataTest.choice(2);
-        assertEquals(Automata.STATES.WAIT,autumataTest.getState());
-        assertEquals(0.0,autumataTest.getCash());
-        assertEquals(0.0,autumataTest.getChange());
+        automataTest.choice(2);
+        assertEquals(Automata.STATES.WAIT,automataTest.getState());
+        assertEquals("0.0",df1.format(automataTest.getCash()));
+        assertEquals("0.0",df1.format(automataTest.getChange()));
     }
 
     @org.junit.Test
     public void finish1() {
-        autumataTest.setState(Automata.STATES.COOK);
-        autumataTest.setCash(20.0);
-        autumataTest.setChange(0.0);
-        autumataTest.setMenuNumber(1);
+        automataTest.setBdio(bdioTest);
+        automataTest.setState(Automata.STATES.COOK);
+        automataTest.setCash(20.0);
+        automataTest.setChange(0.0);
+        automataTest.setMenuNumber(1);
 
-        autumataTest.finish();
-        assertEquals(Automata.STATES.WAIT,autumataTest.getState());
-        assertEquals(0.0,autumataTest.getCash());
-        assertEquals(10.0,autumataTest.getChange());
+        automataTest.finish();
+        assertEquals(Automata.STATES.WAIT,automataTest.getState());
+        assertEquals("0.0",df1.format(automataTest.getCash()));
+        assertEquals("10.0",df1.format(automataTest.getChange()));
     }
 
     @org.junit.Test
     public void finish2() {
-        autumataTest.setState(Automata.STATES.COOK);
-        autumataTest.setCash(20.0);
-        autumataTest.setChange(0.0);
-        autumataTest.setMenuNumber(2);
+        automataTest.setBdio(bdioTest);
+        automataTest.setState(Automata.STATES.COOK);
+        automataTest.setCash(20.0);
+        automataTest.setChange(0.0);
+        automataTest.setMenuNumber(2);
 
-        autumataTest.finish();
-        assertEquals(Automata.STATES.WAIT,autumataTest.getState());
-        assertEquals(0.0,autumataTest.getCash());
-        assertEquals(0.0,autumataTest.getChange());
+        automataTest.finish();
+        assertEquals(Automata.STATES.WAIT,automataTest.getState());
+        assertEquals("0.0",df1.format(automataTest.getCash()));
+        assertEquals("0.0",df1.format(automataTest.getChange()));
     }
 
     @org.junit.Test
     public void finish3() {
-        autumataTest.setState(Automata.STATES.ACCEPT);
-        autumataTest.setCash(20.0);
-        autumataTest.setChange(0.0);
+        automataTest.setBdio(bdioTest);
+        automataTest.setState(Automata.STATES.ACCEPT);
+        automataTest.setCash(20.0);
+        automataTest.setChange(0.0);
 
-        autumataTest.finish();
-        assertEquals(Automata.STATES.ACCEPT,autumataTest.getState());
-        assertEquals(20.0,autumataTest.getCash());
-        assertEquals(0.0,autumataTest.getChange());
+        automataTest.finish();
+        assertEquals(Automata.STATES.ACCEPT,automataTest.getState());
+        assertEquals("20.0",df1.format(automataTest.getCash()));
+        assertEquals("0.0",df1.format(automataTest.getChange()));
     }
 }
