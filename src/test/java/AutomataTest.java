@@ -1,14 +1,15 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.Assert.*;
+import org.junit.Test;
 
 public class AutomataTest {
     ArrayList <String> menuTest = new ArrayList<String>(Arrays.asList("000","aaa","bbb","ccc"));
     ArrayList <Double> pricesTest = new ArrayList<Double>(Arrays.asList(0.0,10.0,20.0,30.0));
     Automata autumataTest = new Automata(menuTest, pricesTest);
 
-    @org.junit.jupiter.api.Test
+    @org.junit.Test
     public void on1() {
         autumataTest.on();
         assertEquals(Automata.STATES.WAIT,autumataTest.getState());
@@ -16,7 +17,7 @@ public class AutomataTest {
         assertEquals(0.0,autumataTest.getChange());
     }
 
-    @org.junit.jupiter.api.Test
+    @org.junit.Test
     public void on2() {
         autumataTest.setState(Automata.STATES.COOK);
 
@@ -26,13 +27,13 @@ public class AutomataTest {
         assertEquals(0.0,autumataTest.getChange());
     }
 
-    @org.junit.jupiter.api.Test
+    @org.junit.Test
     public void off1() {
         autumataTest.off();
         assertEquals(Automata.STATES.OFF,autumataTest.getState());
     }
 
-    @org.junit.jupiter.api.Test
+    @org.junit.Test
     public void off2() {
         autumataTest.setState(Automata.STATES.COOK);
 
@@ -40,7 +41,7 @@ public class AutomataTest {
         assertEquals(Automata.STATES.COOK,autumataTest.getState());
     }
 
-    @org.junit.jupiter.api.Test
+    @org.junit.Test
     public void coin1() {
         autumataTest.setState(Automata.STATES.WAIT);
         autumataTest.setCash(0.0);
@@ -52,7 +53,7 @@ public class AutomataTest {
         assertEquals(0.0,autumataTest.getChange());
     }
 
-    @org.junit.jupiter.api.Test
+    @org.junit.Test
     public void coin2() {
         autumataTest.setState(Automata.STATES.WAIT);
         autumataTest.setCash(10.0);
@@ -64,7 +65,7 @@ public class AutomataTest {
         assertEquals(0.0,autumataTest.getChange());
     }
 
-    @org.junit.jupiter.api.Test
+    @org.junit.Test
     public void coin3() {
         autumataTest.setState(Automata.STATES.COOK);
         autumataTest.setCash(0.0);
@@ -76,7 +77,7 @@ public class AutomataTest {
         assertEquals(20.0,autumataTest.getChange());
     }
 
-    @org.junit.jupiter.api.Test
+    @org.junit.Test
     public void cancel1() {
         autumataTest.setState(Automata.STATES.ACCEPT);
         autumataTest.setCash(20.0);
@@ -89,7 +90,7 @@ public class AutomataTest {
 
     }
 
-    @org.junit.jupiter.api.Test
+    @org.junit.Test
     public void cancel2() {
         autumataTest.setState(Automata.STATES.CHECK);
         autumataTest.setCash(10.0);
@@ -101,7 +102,7 @@ public class AutomataTest {
         assertEquals(10.0,autumataTest.getChange());
     }
 
-    @org.junit.jupiter.api.Test
+    @org.junit.Test
     public void cancel3() {
         autumataTest.setState(Automata.STATES.COOK);
         autumataTest.setCash(10.0);
@@ -113,7 +114,7 @@ public class AutomataTest {
         assertEquals(0.0,autumataTest.getChange());
     }
 
-    @org.junit.jupiter.api.Test
+    @org.junit.Test
     public void choice1() {
         autumataTest.setState(Automata.STATES.ACCEPT);
         autumataTest.setCash(10.0);
@@ -123,7 +124,7 @@ public class AutomataTest {
         assertEquals(Automata.STATES.COOK,autumataTest.getState());
     }
 
-    @org.junit.jupiter.api.Test
+    @org.junit.Test
     public void choice2() {
         autumataTest.setState(Automata.STATES.ACCEPT);
         autumataTest.setCash(10.0);
@@ -135,7 +136,7 @@ public class AutomataTest {
         assertEquals(10.0,autumataTest.getChange());
     }
 
-    @org.junit.jupiter.api.Test
+    @org.junit.Test
     public void choice3() {
         autumataTest.setState(Automata.STATES.ACCEPT);
         autumataTest.setCash(30.0);
@@ -145,7 +146,7 @@ public class AutomataTest {
         assertEquals(Automata.STATES.COOK,autumataTest.getState());
     }
 
-    @org.junit.jupiter.api.Test
+    @org.junit.Test
     public void choice4() {
         autumataTest.setState(Automata.STATES.WAIT);
         autumataTest.setCash(0.0);
@@ -157,7 +158,7 @@ public class AutomataTest {
         assertEquals(0.0,autumataTest.getChange());
     }
 
-    @org.junit.jupiter.api.Test
+    @org.junit.Test
     public void finish1() {
         autumataTest.setState(Automata.STATES.COOK);
         autumataTest.setCash(20.0);
@@ -170,7 +171,7 @@ public class AutomataTest {
         assertEquals(10.0,autumataTest.getChange());
     }
 
-    @org.junit.jupiter.api.Test
+    @org.junit.Test
     public void finish2() {
         autumataTest.setState(Automata.STATES.COOK);
         autumataTest.setCash(20.0);
@@ -183,7 +184,7 @@ public class AutomataTest {
         assertEquals(0.0,autumataTest.getChange());
     }
 
-    @org.junit.jupiter.api.Test
+    @org.junit.Test
     public void finish3() {
         autumataTest.setState(Automata.STATES.ACCEPT);
         autumataTest.setCash(20.0);
