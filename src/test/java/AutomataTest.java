@@ -3,7 +3,7 @@ import org.junit.jupiter.api.Disabled;
 import static java.util.logging.Level.OFF;
 import static org.junit.jupiter.api.Assertions.*;
 
-class AutomataTest {
+public class AutomataTest {
     Automata testA = new Automata();
 
     @org.junit.jupiter.api.Test
