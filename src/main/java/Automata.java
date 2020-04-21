@@ -20,7 +20,8 @@ public class Automata {
 
     protected void readMenu() {
         try {
-            File file = new File("C:\\Users\\Mark\\javalabs\\Java-lab-2\\src\\main\\resources\\DrinksAndPrices.json");
+            File file = new File(getClass().getClassLoader().getResource("DrinksAndPrices.json").getFile()
+            );
             String stringOfMenu = FileUtils.readFileToString(file, "utf-8");
             menu = new JSONObject(stringOfMenu);
             System.out.println(menu.toString(4));
