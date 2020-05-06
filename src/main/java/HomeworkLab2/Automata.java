@@ -1,7 +1,14 @@
 package HomeworkLab2;
+import java.io.File;
+import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.io.FileReader;
 import java.io.BufferedReader;
+import org.json.simple.parser.JSONParser;
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import java.util.Iterator;
+
 public class Automata {
     enum STATES{Off,Wait,Accept,Check,Cook};
     private int cash=0;
@@ -10,11 +17,18 @@ public class Automata {
     private ArrayList<Integer> prices;
     private STATES state=STATES.Off;
     private Boolean checkResult=false;
-    private void loadMenu(String fileName) throws Exception
+    private  String nameOfMenuFile;
+    private File fileMenu=null;
+    private  Exception exception=null;
+    public  Automata(String nameOfMenuFile)
+    {
+        this.nameOfMenuFile=nameOfMenuFile;
+    }
+    private void loadMenuFromTXT()
     {
         try
         {
-            FileReader fileReader = new FileReader(fileName);
+            FileReader fileReader = new FileReader(fileMenu);
             BufferedReader bufferedReader = new BufferedReader(fileReader);
             String line;
             menu=new ArrayList<String>();
@@ -35,14 +49,58 @@ public class Automata {
         }
         catch (Exception ex)
         {
-            throw ex;
+            exception=ex;
         }
+    }
+    private  void  loadMenuFromJson()
+    {
+        menu=new ArrayList<>();
+        prices=new ArrayList<>();
+        try {
+                JSONParser parser = new JSONParser();
+                JSONObject jsonObject=(JSONObject) parser.parse(new FileReader(fileMenu));
+                JSONArray jsonArray =(JSONArray) jsonObject.get("Drinks");
+                for(int i=0;i<jsonArray.size();i++)
+                {
+                    menu.add(((JSONObject)jsonArray.get(i)).values().toArray()[1].toString());
+                    prices.add(Integer.parseInt(((JSONObject)jsonArray.get(i)).values().toArray()[0].toString()));
+                }
+            }
+        catch (Exception ex)
+        {
+            exception=ex;
+        }
+    }
+    private  boolean isFileJson(String nameOfMenuFile)
+    {
+        if(nameOfMenuFile.charAt(nameOfMenuFile.length()-1)=='n')
+            return true;
+        else
+            return  false;
+    }
+    private  void loadMenu()
+    {
+        try
+        {
+            ClassLoader classLoader= Thread.currentThread().getContextClassLoader();
+            fileMenu = Paths.get(classLoader.getResource(nameOfMenuFile).toURI()).toFile();
+            if(isFileJson(nameOfMenuFile))
+                loadMenuFromJson();
+            else
+                loadMenuFromTXT();
+        }
+        catch (Exception ex)
+        {
+            exception=ex;
+            return;
+        }
+
     }
     public void on()
     {
         try
         {
-            loadMenu("Resources/Menu.txt");
+            loadMenu();
             if(state==STATES.Off)
             {
                 state=STATES.Wait;
@@ -69,7 +127,16 @@ public class Automata {
     }
     public ArrayList<String> getMenu()
     {
-        return  menu;
+        if(state!=STATES.Off)
+        {
+            ArrayList<String> menuList = new ArrayList<>();
+            for (int i = 0; i < menu.size(); i++) {
+                menuList.add(menu.get(i)+" : "+prices.get(i).toString());
+            }
+
+        return  menuList;
+        }
+        return  null;
     }
     public STATES getState()
     {

@@ -1,12 +1,20 @@
 package HomeworkLab2;
 
 import static org.junit.Assert.*;
+
+import org.junit.Before;
 import org.junit.Test;
 public class AutomataTest {
+    Automata vendor=null;
+    @Before
+    public void createAutaomata()
+    {
+        vendor = new Automata("Menu.json");
+        assertNotEquals(vendor,null);
+    }
     @Test
     public void procedureTest()
     {
-        Automata vendor=new Automata();
         assertEquals(Automata.STATES.Off,vendor.getState());
         vendor.on();
         assertEquals(Automata.STATES.Wait,vendor.getState());
@@ -28,14 +36,14 @@ public class AutomataTest {
     @Test
     public  void onTest()
     {
-        Automata vendor=new Automata();
+        Automata vendor=new Automata("Menu.txt");
         vendor.on();
         assertEquals(Automata.STATES.Wait,vendor.getState());
     }
     @Test
     public  void offTest()
     {
-        Automata vendor=new Automata();
+        Automata vendor=new Automata("Menu.txt");
         vendor.on();
         vendor.off();
         assertEquals(Automata.STATES.Off,vendor.getState());
@@ -43,7 +51,7 @@ public class AutomataTest {
     @Test
     public void acceptTest()
     {
-        Automata vendor=new Automata();
+        Automata vendor=new Automata("Menu.txt");
         vendor.on();
         vendor.coin(5);
         assertEquals(Automata.STATES.Accept,vendor.getState());
@@ -51,7 +59,7 @@ public class AutomataTest {
     @Test
     public void checkTest()
     {
-        Automata vendor=new Automata();
+        Automata vendor=new Automata("Menu.txt");
         vendor.on();
         vendor.coin(5);
         vendor.choice("Tea");
@@ -60,7 +68,7 @@ public class AutomataTest {
     @Test
     public void cancelTest()
     {
-        Automata vendor=new Automata();
+        Automata vendor=new Automata("Menu.txt");
         vendor.on();
         vendor.coin(5);
         vendor.choice("Tea");
@@ -70,7 +78,7 @@ public class AutomataTest {
     @Test
     public void cookTest()
     {
-        Automata vendor=new Automata();
+        Automata vendor=new Automata("Menu.txt");
         vendor.on();
         vendor.coin(5);
         vendor.choice("Tea");
@@ -83,7 +91,7 @@ public class AutomataTest {
     @Test
     public void endTest()
     {
-        Automata vendor=new Automata();
+        Automata vendor=new Automata("Menu.txt");
         vendor.on();
         vendor.coin(5);
         vendor.choice("Tea");
