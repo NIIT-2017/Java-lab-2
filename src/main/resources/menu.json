@@ -1,0 +1,50 @@
+[
+{
+"drink": {
+"name": "Black Tea",
+"price": 30
+}
+},
+{
+"drink": {
+"name": "Green Tea",
+"price": 40
+}
+},
+{
+"drink": {
+"name": "Lemon Tea",
+"price": 50
+}
+},
+{
+"drink": {
+"name": "Espresso",
+"price": 60
+}
+},
+{
+"drink": {
+"name": "Americano",
+"price": 70
+}
+},
+{
+"drink": {
+"name": "Capuccino",
+"price": 80
+}
+},
+{
+"drink": {
+"name": "Latte",
+"price": 90
+}
+},
+{
+"drink": {
+"name": "Double Espresso",
+"price": 100
+}
+}
+]
