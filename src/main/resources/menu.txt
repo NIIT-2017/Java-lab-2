@@ -1,0 +1,4 @@
+Empty 0
+Сappuccino 10
+Latte 20
+Americano 30
