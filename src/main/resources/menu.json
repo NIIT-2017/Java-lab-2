@@ -1,0 +1,34 @@
+{"menu": [
+  {
+    "price": "25",
+    "name": "125 ml"
+  },
+  {
+    "price": "25",
+    "name": "250 ml"
+  },
+  {
+    "price": "25",
+    "name": "water"
+  },
+  {
+    "price": "30",
+    "name": "hot water"
+  },
+  {
+    "price": "30",
+    "name": "tea"
+  },
+  {
+    "price": "40",
+    "name": "strong tea"
+  },
+  {
+    "price": "35",
+    "name": "coffee"
+  },
+  {
+    "price": "25",
+    "name": "hot juce"
+  }
+]}
