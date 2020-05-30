@@ -1,0 +1,3 @@
+Latte 30
+Espresso 45
+Cappuccino 30
