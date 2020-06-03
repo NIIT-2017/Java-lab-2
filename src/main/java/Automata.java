@@ -34,7 +34,7 @@ public class Automata {
             System.out.println("Automata is" + state + "!");
     }
 
-    private void off() {                                      //выключение автомата;
+    private void off() {                                       //выключение автомата;
         if (state == States.wait && cash == 0)
             state = States.off;
     }
@@ -93,13 +93,13 @@ public class Automata {
     public void cancel() {                                        //отмена сеанса обслуживания пользователем;
         System.out.println("To return money push!");
         if (state == States.accept && cash != 0) {
-            System.out.println("Return money in " + cash + "!");
+            System.out.println("Return money " + cash + "!");
             cash = 0;
             state = States.wait;
         }
     }
 
-    private void cook(int choice) {                         //имитация процесса приготовления напитка;
+    private void cook(int choice) {                                //имитация процесса приготовления напитка;
         if (state == States.cook) {
             System.out.println("Cooking a " + menu.get(choice));
             state = States.check;
@@ -107,9 +107,9 @@ public class Automata {
         }
     }
 
-    private void finish() {                                              // завершение обслуживания пользователя.
+    private void finish() {                                        // завершение обслуживания пользователя.
         if (cash != 0) {
-            System.out.println("Return money in " + cash + "!");
+            System.out.println("Return money " + cash + "!");
             cash = 0;
         }
 
@@ -117,4 +117,3 @@ public class Automata {
         state = States.wait;
     }
 }
-
