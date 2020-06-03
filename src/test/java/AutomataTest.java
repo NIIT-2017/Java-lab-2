@@ -2,10 +2,10 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-class AutomataTest {
+public class AutomataTest {
 
     @org.junit.Test
-    void choice() {
+    public void choice() {
         Automata TestAutomata = new Automata();
         TestAutomata.on();
         TestAutomata.coin(150);
