@@ -4,7 +4,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class AutomataTest {
 
-    @Test
+    @org.junit.Test
     void choice() {
         Automata TestAutomata = new Automata();
         TestAutomata.on();
