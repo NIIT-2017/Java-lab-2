@@ -1,0 +1,6 @@
+Espresso
+Americano
+Cappuccino
+Latte
+Tea
+Water
