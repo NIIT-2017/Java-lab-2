@@ -23,7 +23,7 @@ public class Automata {
         this.prices = new ArrayList<Integer>();
 
         try {
-            File file = new File("C:\\Users\\240488\\IdeaProjects\\JavaLab2\\src\\main\\resources\\menu.txt");
+            File file = new File("menu.txt");
             FileReader reader = new FileReader(file);
             BufferedReader breader = new BufferedReader(reader);
             String line = null;
