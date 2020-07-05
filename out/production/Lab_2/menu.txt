@@ -1,0 +1,3 @@
+coffe : 25
+tea : 15
+cappuchino : 20
